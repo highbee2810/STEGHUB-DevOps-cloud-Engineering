@@ -50,4 +50,16 @@ This project is a documentation guide for setting up a LAMP (Linux, Apache, MySQ
    ```bash
    sudo apt update
 ![Screenshot (52)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/cc9de0d2-111a-4a2d-8c6e-472427144398)
+2.**Install apache**
+   ```bash
+sudo apt install apache2
+![Screenshot (53)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/a66fa535-c17c-4b31-815a-50348afd0c53)
+3. **Enable that apache is running**
+ ```bash
+   sudo systemctl status apache2
+
+
+### if it green and running it means everything is running smoothly
+![Screenshot (54)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/08044572-fa7f-4430-8408-c2e30a4a6cbb)
+
 
