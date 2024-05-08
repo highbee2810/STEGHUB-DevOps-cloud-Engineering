@@ -49,4 +49,5 @@ This project is a documentation guide for setting up a LAMP (Linux, Apache, MySQ
 1. **Update Package Repository**:
    ```bash
    sudo apt update
+![Screenshot (52)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/cc9de0d2-111a-4a2d-8c6e-472427144398)
 
