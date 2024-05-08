@@ -27,18 +27,22 @@ This project is a documentation guide for setting up a LAMP (Linux, Apache, MySQ
 4. **Add Tags**:
    - Optionally, add tags for better organization.
 
+
 5. **Configure Security Group**:
    - Create a new security group or use an existing one.
    - Allow inbound traffic on ports 80 (HTTP), 22 (SSH), and 3306 (MySQL) from your IP address.
+![Screenshot (57)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c2e660e8-e954-4dd4-88e7-b96749c55fc5)
 
 6. **Review and Launch**:
    - Review the configuration and launch the instance.
-![Launched Ec2 instance](/images/created EC2 instance.png)
 
-     created EC2 instance.png
+![created EC2 instance](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f0c3258d-8ee6-42e3-adc5-aa9daaea10a4)
+    
 
 7. **Connect to the Instance**:
    - Use Mobaxterm to connect to the instance via SSH.
+     ![connecting to server using mobaxterm](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/4cadb9fc-f4d2-4243-b56f-d843bc15686f)
+
 
 ## Installing LAMP Stack
 
