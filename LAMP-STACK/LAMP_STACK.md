@@ -33,6 +33,9 @@ This project is a documentation guide for setting up a LAMP (Linux, Apache, MySQ
 
 6. **Review and Launch**:
    - Review the configuration and launch the instance.
+![Launched Ec2 instance](/images/created EC2 instance.png)
+
+     created EC2 instance.png
 
 7. **Connect to the Instance**:
    - Use Mobaxterm to connect to the instance via SSH.
