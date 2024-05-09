@@ -30,7 +30,7 @@ This project is a documentation guide for setting up a LAMP (Linux, Apache, MySQ
 
 5. **Configure Security Group**:
    - Create a new security group or use an existing one.
-   - Allow inbound traffic on ports 80 (HTTP), 22 (SSH), and 3306 (MySQL) from your IP address.
+   - Allow inbound traffic on ports 80 (HTTP), 22 (SSH), and 443 (HTTPS) from your IP address.
 ![Screenshot (57)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c2e660e8-e954-4dd4-88e7-b96749c55fc5)
 
 6. **Review and Launch**:
@@ -53,13 +53,10 @@ This project is a documentation guide for setting up a LAMP (Linux, Apache, MySQ
 2.**Install apache**
    ```bash
 sudo apt install apache2
-![Screenshot (53)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/a66fa535-c17c-4b31-815a-50348afd0c53)
-3. **Enable that apache is running**
- ```bash
-   sudo systemctl status apache2
 
 
-### if it green and running it means everything is running smoothly
-![Screenshot (54)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/08044572-fa7f-4430-8408-c2e30a4a6cbb)
+
+
+
 
 
