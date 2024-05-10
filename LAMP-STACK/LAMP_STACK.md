@@ -116,7 +116,8 @@ The following were installed:
 - php-mysql, a PHP module that allows PHP to communicate with MySQL-based databases.
 - libapache2-mod-php, to enable Apache to handle PHP files.
   ```sudo apt install php libapache2-mod-php php-mysql```
-   
+ 2.**confirm php installation**:
+  ``` php -v```  
 
 
 
