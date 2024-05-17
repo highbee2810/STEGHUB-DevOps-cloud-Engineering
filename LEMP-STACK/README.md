@@ -17,6 +17,7 @@ This project is a documentation guide for setting up a LEMP (Linux, Nginx, MySQL
    - Sign in to the AWS Management Console.
    - Navigate to EC2 Dashboard.
    - Click on "Launch Instance" and choose Ubuntu Server 20.04 LTS as the operating system.
+![Screenshot (93)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/5e6475a6-11da-4c7a-a7f0-c7affb362206)
 
 2. **Configure Instance Details**:
    - Choose instance type, network, subnet, and other settings as per your requirements.
