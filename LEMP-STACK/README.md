@@ -79,3 +79,13 @@ OR
 curl http://127.0.0.1:80
 ```
 ![Screenshot (103)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/43842955-0740-4536-85cc-6820bf37a43a)
+5.**Test how Nginx can respond to request over the internet**
+```
+http://<public-ip address>:80
+```
+![Screenshot (105)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e60890e0-f9e3-418b-97dd-1920ece9122f)
+__6.__ __Another way to retrieve the public ip address other than check the aws console__
+
+```
+curl -s http://169.254.169.254/latest/meta-data/public-ipv4
+```
