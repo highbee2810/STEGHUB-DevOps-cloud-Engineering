@@ -130,3 +130,15 @@ Exit MySQL shell
 ```
 exit
 ```
+## Step 3 - Install PHP
+1.**Install php**:
+while Apache embeds PHP interpreter in each request, Nginx requires an external program to handle PHP processsing and act as bridge between PHP interpreter itself and web server. 
+you need to Install php-fpm (PHP fastCGI process manager) and tell nginx to pass PHP requests to this software for processing. Also, install php-mysql, a php module that allows PHP to communicate with MySQL-based databases. Core PHP packages will automatically be installed as dependencies.
+```
+sudo apt install php-fpm php-mysql -y
+```
+![Screenshot (109)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/891c3b63-614a-46d0-aafb-0901010d2b50)
+
+
+
+
