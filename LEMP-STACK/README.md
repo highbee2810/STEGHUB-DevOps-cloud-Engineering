@@ -138,6 +138,109 @@ you need to Install php-fpm (PHP fastCGI process manager) and tell nginx to pass
 sudo apt install php-fpm php-mysql -y
 ```
 ![Screenshot (109)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/891c3b63-614a-46d0-aafb-0901010d2b50)
+## Configuring Nginx to use PHP processor
+1.**Create a root web directory for your_domain**
+```
+sudo mkdir /var/www/projectLEMP
+```
+2.**Assign the directory ownership with $USER which will reference the current system user**
+```
+sudo chown -R $USER:$USER /var/www/projectLEMP
+```
+![Screenshot (110)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/7532fa89-6bda-460c-aee4-035f828cd311)
+3.**Create a new configuration file in Nginx’s “sites-available” directory.**
+```
+sudo nano /etc/nginx/sites-available/projectLEMP
+```
+paste the following codes 
+
+```
+server {
+  listen 80;
+  server_name projectLEMP www.projectLEMP;
+  root /var/www/projectLEMP;
+
+  index index.html index.htm index.php;
+
+  location / {
+    try_files $uri $uri/ =404;
+  }
+
+  location ~ \.php$ {
+    include snippets/fastcgi-php.conf;
+    fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+  }
+
+  location ~ /\.ht {
+    deny all;
+  }
+}
+```
+![Screenshot (112)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c9b2cd5b-3812-4083-b5ba-83136ab32632)
+
+
+### Here’s what each directives and location blocks does:
+
+- __listen__ - Defines what port nginx listens on. In this case it will listen on port 80, the default port for HTTP.
+
+- __root__ - Defines the document root where the files served by this website are stored.
+
+- __index__ - Defines in which order Nginx will prioritize the index files for this website. It is a common practice to list index.html files with a higher precedence than index.php files to allow for quickly setting up a maintenance landing page for PHP applications. You can adjust these settings to better suit your application needs.
+
+- __server_name__ - Defines which domain name and/or IP addresses the server block should respond for. Point this directive to your domain name or public IP address.
+
+- __location /__ - The first location block includes the try_files directive, which checks for the existence of files or directories matching a URI request. If Nginx cannot find the appropriate result, it will return a 404 error.
+
+- __location ~ \.php$__ - This location handles the actual PHP processing by pointing Nginx to the fastcgi-php.conf configuration file and the php7.4-fpm.sock file, which declares what socket is associated with php-fpm.
+
+- __location ~ /\.ht__ - The last location block deals with .htaccess files, which Nginx does not process. By adding the deny all directive, if any .htaccess files happen to find their way into the document root, they will not be served to visitors.
+  __4.__ __Activate the configuration by linking to the config file from Nginx’s sites-enabled directory__
+
+```
+sudo ln -s /etc/nginx/sites-available/projectLEMP /etc/nginx/sites-enabled/
+```
+This will tell Nginx to use this configuration when next it is reloaded.
+
+__5.__ __Test the configuration for syntax error__
+
+```
+sudo nginx -t
+```
+![Screenshot (114)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e3f954fe-5b2d-4846-b569-366e03adee84)
+
+
+__6.__ __Disable the default Nginx host that currently configured to listen on port 80__
+
+```
+sudo unlink /etc/nginx/sites-enabled/default
+```
+__7.__ __Reload Nginx to apply the changes__
+```
+sudo systemctl reload nginx
+```
+
+__8.__ __The new website is now active but the web root /var/www/projectLEMP is still empty. Create an index.html file in this location so to test the virtual host work as expected.__
+
+```
+sudo echo ‘Hello LEMP from hostname’ $(curl -s http://169.254.169.254/latest/meta-data/public-hostname) ‘with public IP’ $(curl -s http://169.254.169.254/latest/meta-data/public-ipv4) > /var/www/projectLEMP/index.html
+```
+![Screenshot (115)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e1adc8e2-e9bc-4b17-981b-d66f543e8ac2)
+## Testing PHP with Nginx
+**1. Create a test PHP file in the document root. Open a new file called info.php within the document root.**
+```
+sudo nano /var/www/projectLEMP/info.php
+```
+paste the code below
+```
+<?php
+phpinfo();
+```
+**2. Access the page on the browser and attach /info.php**
+```
+http://51.20.64.70/info.php
+```
+
+
 
 
 
