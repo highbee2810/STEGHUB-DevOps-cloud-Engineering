@@ -89,3 +89,44 @@ __6.__ __Another way to retrieve the public ip address other than check the aws 
 ```
 curl -s http://169.254.169.254/latest/meta-data/public-ipv4
 ```
+## Installing Mysql
+1. **mysql is popular relational database**:
+   ```bash
+   sudo apt install mysql-server
+   ```
+![Screenshot (106)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/a7e7ee31-9761-498f-ad17-cf91c023d19e)
+
+2.**log into mysql**:
+   ```bash
+   sudo mysql
+   ```
+   
+3.**running a security script to set password for the root user using  mysql_native_password***:
+   ```
+   ALTER USER 'root'@'localhost' IDENTIFIED WITH mysql_native_password BY 'Admin123$';
+   ```
+![Screenshot (107)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/92766b3e-80a9-4c83-a3ea-fce97f2df76f)
+Exit the MySQL shell
+```
+exit
+```
+
+
+__5.__ __Run an Interactive script to secure MySQL__
+
+The security script comes pre-installed with mysql. This script removes some insecure settings and lock down access to the database system.
+```
+sudo mysql_secure_installation
+```
+![Screenshot (108)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/de33e9e2-53b8-4d91-9bb3-3ce01743f11c)
+
+__6.__ __After changing root user password, log in to MySQL console.__
+
+A command prompt for password was noticed after running the command below.
+```
+sudo mysql -p
+```
+Exit MySQL shell
+```
+exit
+```
