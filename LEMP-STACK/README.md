@@ -338,8 +338,7 @@ http://51.20.64.70/todo_list.php
 ![Screenshot (127)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1b3c0c54-9b43-4a3a-8e93-e93b7105a468)
 
 ## conclusion
-
-
+we have successfully set up a LEMP stack on an Amazon EC2 instance using GIT Bash for remote server access. You can now deploy and host your web applications on this environment.
 
 
 
