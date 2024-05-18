@@ -168,7 +168,7 @@ server {
 
   location ~ \.php$ {
     include snippets/fastcgi-php.conf;
-    fastcgi_pass unix:/var/run/php/php8.1-fpm.sock;
+    fastcgi_pass unix:/var/run/php/php8.3-fpm.sock;
   }
 
   location ~ /\.ht {
@@ -239,6 +239,113 @@ phpinfo();
 ```
 http://51.20.64.70/info.php
 ```
+![Screenshot (116)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/ee13f0b2-605a-477a-aad0-015e08532c87)
+after checking the details about PHP is best to remove the file as it contain sensitive information
+```
+sudo rm /var/www/projectLEMP/info.php
+```
+## Step 6 - Retrieve Data from MySQL database with PHP
+1.**connect to MYSQL database** 
+```
+sudo mysql
+```
+
+2.**create a new Database**
+```
+CREATE DATABASE Mytodo_database;
+```
+
+3.**create a user and grant the user full priviledge with password**
+```
+CREATE USER 'Ib'@'%' IDENTIFIED WITH mysql_native_password BY 'Admin123$';
+
+GRANT ALL ON Mytodo_database.* TO 'todo_user'@'%';
+```
+
+4. **exit**
+```
+exit
+```
+
+5. **check if the user has proper permission by logging**
+```
+mysql -u Ib -p
+
+SHOW DATABASES;
+```
+**show database**
+**create a table called todo_list**
+```
+CREATE TABLE todo_database.todo_list (
+  item_id INT AUTO_INCREMENT,
+  content VARCHAR(255),
+  PRIMARY KEY(item_id)
+);
+```
+
+**insert few rows**
+```
+INSERT INTO todo_database.todo_list (content) VALUES ("My first important item");
+
+INSERT INTO todo_database.todo_list (content) VALUES ("My second important item");
+
+INSERT INTO todo_database.todo_list (content) VALUES ("My third important item");
+INSERT INTO todo_database.todo_list (content) VALUES ("fourth important item");
+INSERT INTO todo_database.todo_list (content) VALUES ("My fifth important item");
+INSERT INTO todo_database.todo_list (content) VALUES ("and this one more thing");
+```
+**check if that the data was succesfully saved into the table**
+```
+SELECT * FROM todo_database.todo_list;
+```
+![Screenshot (125)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/3d50703e-52e1-44bf-8658-f689a23a5062)
+**exit**
+```
+exit
+```
+**create a PHP script**
+```
+sudo nano /var/www/projectLEMP/todo_list.php
+```
+**copy this content into it**
+```
+<?php
+$user = "Ib";
+$password = "Admin123$";
+$database = "todo_database";
+$table = "todo_list";
+
+try {
+  $db = new PDO("mysql:host=localhost;dbname=$database", $user, $password);
+  echo "<h2>TODO</h2><ol>";
+  foreach($db->query("SELECT content FROM $table") as $row) {
+    echo "<li>" . $row['content'] . "</li>";
+  }
+  echo "</ol>";
+} catch (PDOException $e) {
+    print "Error!: " . $e->getMessage() . "<br/>";
+    die();
+}
+?>
+```
+![Screenshot (126)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/7842fdc5-412e-48d7-a936-c848fb7127dc)
+
+**save and close**
+**Access the page by browser using ip address or domain name**
+```
+http://51.20.64.70/todo_list.php
+```
+![Screenshot (127)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1b3c0c54-9b43-4a3a-8e93-e93b7105a468)
+
+## conclusion
+
+
+
+
+
+
+
+
 
 
 
