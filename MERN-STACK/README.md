@@ -6,8 +6,8 @@ This project is a documentation guide for setting up a MERN (MongoDb,ExpressJs,R
 
 ### Components
 
-- **MongoDB:** a nosql database that store data inform of documents
-- **ExpressJs:** a serverside javascript framework
+- **MongoDB:** a no-sql database that store data inform of documents
+- **ExpressJs:** a serverside web application javascript framework
 - **ReactJs:** a frontend Javascript framework used for UI(user interface) design.
 - **NodeJs:** a runtime environment that allows javascript to run on machine instead of browsers.
 
