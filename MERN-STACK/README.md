@@ -350,11 +350,17 @@ app.listen(port, () => {
   console.log(`Server running on port ${port}`);
 });
 ```
-![Uploading Screenshot (154).png…]()
-![Uploading Screenshot (154).png…]()
+
+![Screenshot (154)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/0fc2f52a-2840-4bd7-8f1a-b3222d4b1d3e)
 
 
+**start your server**
+```
+node index.js
+```
 
+
+## Testing Backend code without frontend using RESTful API
 
 
 
