@@ -301,6 +301,59 @@ create a Database and collection
 touch .env
 vim .env
 ```
+Add connection string to connect to MongoDB database
+```
+DB = ‘mongodb+srv://<username>:<password>@<network-address>/<dbname>?retryWrites=true&w=majority’
+```
+![Screenshot (153)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/432bb65c-6a6f-4676-892c-09c73eaf9ae9)
+**3. Update the index.js to reflect the use of .env so that Node.js can connect to the database.**
+```
+vim index.js
+```
+delete existing code and copy the below code
+```
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+const routes = require('./routes/api');
+const path = require('path');
+require('dotenv').config();
+
+const app = express();
+
+const port = process.env.PORT || 5000;
+
+// Connect to the database
+mongoose.connect(process.env.DB, { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log(`Database connected successfully`))
+  .catch(err => console.log(err));
+
+// Since mongoose promise is deprecated, we override it with Node's promise
+mongoose.Promise = global.Promise;
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  next();
+});
+
+app.use(bodyParser.json());
+
+app.use('/api', routes);
+
+app.use((err, req, res, next) => {
+  console.log(err);
+  next();
+});
+
+app.listen(port, () => {
+  console.log(`Server running on port ${port}`);
+});
+```
+![Uploading Screenshot (154).png…]()
+![Uploading Screenshot (154).png…]()
+
+
 
 
 
