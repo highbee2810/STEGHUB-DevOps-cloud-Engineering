@@ -361,6 +361,20 @@ node index.js
 
 
 ## Testing Backend code without frontend using RESTful API
+Postman will be used to test the backend code . the endpoints were tested using POST , GET requets 
+**Set the header**
+**send a post request**
+![Screenshot (157)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/8b227ec5-6dec-4880-9a4f-d2df45706b1e)
+**send a get request**
+![Screenshot (158)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/bf4cc539-53e6-41e3-b203-86c7fcc7c629)
+
+## STEP:2 Frontend Creation
+**now is time to create the client-side of the application**
+in the Todo folder of your application run the code below
+```
+npx create-react-app client
+```
+
 
 
 
