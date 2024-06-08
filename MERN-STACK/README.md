@@ -251,6 +251,7 @@ const Todo = mongoose.model('todo', TodoSchema);
 module.exports = Todo;
 ```
 ![Screenshot (146)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/68894f71-6059-480b-abae-c07908696010)
+
 4.**Now we need to update the routes from the file api.js in the 'routes' directory**:
 change to the directory routes and open the file api.js
 delete the code inside the file , copy and paste the code below into it
@@ -761,9 +762,20 @@ npm run dev
 ![Screenshot (178)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/b1e3772d-4b51-4370-80b1-8aec3bb9924c)
 
 ## now our Todo App is ready for use and fully functional with creating a task , deleting a task and viewing all the task.
-![Screenshot (180)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/aba596fa-f924-48d6-9fad-6dceaf930ef2)
 
+![Screenshot (181)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/147cdf06-4007-4125-8b07-53a0221e83fb)
 
+# Conclusion:
+Building a Todo app with the MERN stack (MongoDB, Express, React, and Node.js) is a comprehensive project that covers many essential aspects of full-stack web development. Through this project, I have learned how to:
+
+**Set Up and Configure the Development Environment:** By installing and configuring Node.js, MongoDB, and related dependencies, I laid the foundation for the MERN stack application.
+**Design and Implement RESTful APIs:** Using Express.js, I created a backend that handles CRUD operations, allowing me to manage todos effectively.
+**Connect to a MongoDB Database:** With Mongoose, I defined schemas and models, making database interactions straightforward and structured.
+**Build a Frontend Interface with React:** React.js helped me build a dynamic and responsive user interface, enabling users to interact with the Todo app seamlessly.
+**Integrate Frontend and Backend**By setting up proxy configurations and using asynchronous API calls, I connected the frontend with the backend, achieving a fully functional application.
+**Implement State Management:** I managed state effectively within React components, ensuring data consistency and improving user experience.
+**Handle Errors and Debugging:** Through logging and error handling, I ensured the robustness of the application, making it more reliable and easier to maintain.
+**Testing API using Postman**
 
 
 
