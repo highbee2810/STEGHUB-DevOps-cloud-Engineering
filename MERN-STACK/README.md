@@ -1,4 +1,4 @@
-# Project Documentation: MERN Stack on EC2 Instance
+![image](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c2f6ecbe-fae1-4aef-9e6c-6a234654beac)# Project Documentation: MERN Stack on EC2 Instance
 
 ## Overview
 
@@ -374,6 +374,395 @@ in the Todo folder of your application run the code below
 ```
 npx create-react-app client
 ```
+![Screenshot (160)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e4c4b91f-983d-4fee-8653-1adb385bc415)
+This created a new folder in the Todo directory called client, where all the react code was added.
+## Running a React App
+Before testing the react app, the following dependencies needs to be installed in the project root directory.
+Install concurrently. It is used to run more than one command simultaneously from the same terminal window.
+```
+npm install concurrently --save-dev
+```
+![Screenshot (161)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/843a430d-44a1-4a06-af44-191c3c606405)
+
+
+**Install nodemon. It is used to run and monitor the server. If there is any change in the server code, nodemon will restart it automatically and load the new changes.**
+```
+npm install nodemon --save-dev
+```
+![Screenshot (162)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/7beebddb-2337-4d7e-8348-921137545775)
+
+In Todo folder open the package.json file, change the highlighted part of the below screenshot and replace with the code below:
+```
+"scripts": {
+  "start": "node index.js",
+  "start-watch": "nodemon index.js",
+  "dev": "concurrently \"npm run start-watch\" \"cd client && npm start\""
+}
+```
+![Screenshot (163)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/57aa4fd0-dbf2-49fe-868d-29e4ae48d768)
+## Change proxy package in package.json
+change directory
+```
+cd my-new-app
+```
+Open the package.json file
+```
+vim package.json
+```
+![Screenshot (166)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/edc0e70d-cd4e-4ab0-9b55-33ed18f7a1a0)
+
+Add the key value pair in the package.json file
+```
+“proxy”: “http://localhost:5000”
+```
+![Screenshot (167)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1756ff00-bdf2-4734-9a82-f4e3488d2a46)
+
+
+The whole purpose of adding the proxy configuration above is to make it possible to access the application directly from the browser by simply calling the server url like http://locathost:5000 rather than always including the entire path like http://localhost:5000/api/todos
+
+Ensure you are inside the Todo directory, and simply do:
+```
+npm run dev
+```
+![Screenshot (168)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/91c5e912-b121-483f-904a-7f51d70c2a88)
+
+
+The app opened and started running on localhost:3000
+Note: In order to access the application from the internet, TCP port 3000 had been opened on EC2.
+
+## Creating React Components
+One of the advantages of react is that it makes use of components, which are reusable and also makes code modular. For the Todo app, there are two stateful components and one stateless component. From Todo directory, run:
+```
+cd client
+```
+change directory to src
+```
+cd src
+```
+**2. Inside your src folder, create another folder called “components”**
+```
+mkdir components
+```
+![Screenshot (169)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/17f94b36-86ed-4721-b8fb-cd839af9a937)
+
+**3. Inside the ‘components’ directory create three files “Input.js”, “ListTodo.js” and “Todo.js”.**
+```
+touch Input.js ListTodo.js Todo.js
+```
+![Screenshot (170)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/3f6a999e-2b0e-492c-9d7b-0c0b5d29e7d5)
+
+Open Input.js file
+```
+vim Input.js
+```
+Paste in the following:
+```
+import React, { Component } from 'react';
+import axios from 'axios';
+
+class Input extends Component {
+  state = {
+    action: ""
+  }
+
+  handleChange = (event) => {
+    this.setState({ action: event.target.value });
+  }
+
+  addTodo = () => {
+    const task = { action: this.state.action };
+
+    if (task.action && task.action.length > 0) {
+      axios.post('/api/todos', task)
+        .then(res => {
+          if (res.data) {
+            this.props.getTodos();
+            this.setState({ action: "" });
+          }
+        })
+        .catch(err => console.log(err));
+    } else {
+      console.log('Input field required');
+    }
+  }
+
+  render() {
+    let { action } = this.state;
+    return (
+      <div>
+        <input type="text" onChange={this.handleChange} value={action} />
+        <button onClick={this.addTodo}>add todo</button>
+      </div>
+    );
+  }
+}
+
+export default Input;
+```
+![Screenshot (171)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/d6889a13-20a0-4e55-a808-c2e6b8c75e7a)
+In oder to make use of Axios, which is a Promise based HTTP client for the browser and node.js, you need to cd into your client from your terminal and run yarn add axios or npm install axios.
+
+Move to the client folder
+```
+cd ../..
+```
+run the below command to Install Axios
+```
+npm install axios
+```
+![Screenshot (172)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/55875981-aaaf-4a87-a52c-88ffd3aea8e7)
+
+Go to components directory
+```
+cd src/components
+```
+After that open the ListTodo.js
+```
+vim ListTodo.js
+```
+Copy and paste the following code:
+```
+import React from 'react';
+
+const ListTodo = ({ todos, deleteTodo }) => {
+  return (
+    <ul>
+      {
+        todos && todos.length > 0 ? (
+          todos.map(todo => {
+            return (
+              <li key={todo._id} onClick={() => deleteTodo(todo._id)}>
+                {todo.action}
+              </li>
+            );
+          })
+        ) : (
+          <li>No todo(s) left</li>
+        )
+      }
+    </ul>
+  );
+}
+
+export default ListTodo;
+```
+![Screenshot (173)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e333b241-b83d-479c-b917-8e4b9f943127)
+
+ in the Todo.js file, write the following code
+ ```
+vim Todo.js
+```
+paste the code below
+```
+import React, { Component } from 'react';
+import axios from 'axios';
+
+import Input from './Input';
+import ListTodo from './ListTodo';
+
+class Todo extends Component {
+  state = {
+    todos: []
+  }
+
+  componentDidMount() {
+    this.getTodos();
+  }
+
+  getTodos = () => {
+    axios.get('/api/todos')
+      .then(res => {
+        if (res.data) {
+          this.setState({
+            todos: res.data
+          });
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  deleteTodo = (id) => {
+    axios.delete(`/api/todos/${id}`)
+      .then(res => {
+        if (res.data) {
+          this.getTodos();
+        }
+      })
+      .catch(err => console.log(err));
+  }
+
+  render() {
+    let { todos } = this.state;
+    return (
+      <div>
+        <h1>My Todo(s)</h1>
+        <Input getTodos={this.getTodos} />
+        <ListTodo todos={todos} deleteTodo={this.deleteTodo} />
+      </div>
+    );
+  }
+}
+
+export default Todo;
+```
+![Screenshot (174)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/3814da1d-74c8-478e-ba33-7dd4502b7f73)
+We need to make a little adjustment to our react code. Delete the logo and adjust our App.js to look like this
+Move to src folder
+```
+cd ..
+```
+Ensure to be in the src folder and run:
+```
+vim App.js
+```
+paste the code below
+```
+import React from 'react';
+import Todo from './components/Todo';
+import './App.css';
+
+const App = () => {
+  return (
+    <div className="App">
+      <Todo />
+    </div>
+  );
+}
+
+export default App;
+```
+![Screenshot (175)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f986c814-a027-4b66-8138-67acdbfd6ac6)
+In the src directory, open the App.css
+```
+vim App.css
+```
+copy and paste the code below
+```
+.App {
+  text-align: center;
+  font-size: calc(10px + 2vmin);
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input {
+  height: 40px;
+  width: 50%;
+  border: none;
+  border-bottom: 2px #101113 solid;
+  background: none;
+  font-size: 1.5rem;
+  color: #787a80;
+}
+
+input:focus {
+  outline: none;
+}
+
+button {
+  width: 25%;
+  height: 45px;
+  border: none;
+  margin-left: 10px;
+  font-size: 25px;
+  background: #101113;
+  border-radius: 5px;
+  color: #787a80;
+  cursor: pointer;
+}
+
+button:focus {
+  outline: none;
+}
+
+ul {
+  list-style: none;
+  text-align: left;
+  padding: 15px;
+  background: #171a1f;
+  border-radius: 5px;
+}
+
+li {
+  padding: 15px;
+  font-size: 1.5rem;
+  margin-bottom: 15px;
+  background: #282c34;
+  border-radius: 5px;
+  overflow-wrap: break-word;
+  cursor: pointer;
+}
+
+@media only screen and (min-width: 300px) {
+  .App {
+    width: 80%;
+  }
+
+  input {
+    width: 100%;
+  }
+
+  button {
+    width: 100%;
+    margin-top: 15px;
+    margin-left: 0;
+  }
+}
+
+@media only screen and (min-width: 640px) {
+  .App {
+    width: 60%;
+  }
+
+  input {
+    width: 50%;
+  }
+
+  button {
+    width: 30%;
+    margin-left: 10px;
+    margin-top: 0;
+  }
+}
+```
+![Screenshot (176)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/40891fa9-cdf1-4431-9984-11e6296cd4a7)
+In the src directory, open the index.css
+```
+vim index.css
+```
+copy and paste the code below
+```
+body {
+  margin: 0;
+  padding: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  box-sizing: border-box;
+  background-color: #282c34;
+  color: #787a80;
+}
+
+code {
+  font-family: source-code-pro, Menlo, Monaco, Consolas, "Courier New", monospace;
+}
+```
+![Screenshot (177)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1eea02fc-a102-41b1-84d2-3bcb25cf9ca9)
+
+**Go to the Todo directory**
+```
+cd ../..
+```
+**Run the code below**
+```
+npm run dev
+```
+![Screenshot (178)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/b1e3772d-4b51-4370-80b1-8aec3bb9924c)
+
+## now our Todo App is ready for use and fully functional with creating a task , deleting a task and viewing all the task.
+![Screenshot (180)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/aba596fa-f924-48d6-9fad-6dceaf930ef2)
+
 
 
 
