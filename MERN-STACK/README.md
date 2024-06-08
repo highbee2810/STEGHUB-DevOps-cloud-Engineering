@@ -1,4 +1,4 @@
-![image](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c2f6ecbe-fae1-4aef-9e6c-6a234654beac)# Project Documentation: MERN Stack on EC2 Instance
+# Project Documentation: MERN Stack on EC2 Instance
 
 ## Overview
 
