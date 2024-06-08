@@ -56,80 +56,87 @@ ssh -i "steghub.pem" ubuntu@18.209.18.61
    sudo apt update
    ```
    ![Screenshot (131)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1bc083cd-f68c-436f-999b-503fb23421fa)
-2. **Upgrade ubuntu**:
+   
+3. **Upgrade ubuntu**:
    ```
    sudo apt upgrade
    ```
-3.**Get the location of NodeJs from the ubuntu  Repository**:
+3. **Get the location of NodeJs from the ubuntu  Repository**:
 ```
 curl fsSL https://deb.nodesource.com/setup_18.x | sudo -E bash -
 ```
 ![Screenshot (132)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/50f890e3-c16a-4b15-9ab3-f5bf6f9361c2)
 
-Purpose of the Script:
+**Purpose of the Script:**
 The NodeSource setup script performs several tasks:
 
 Adds the NodeSource repository to your system's package manager sources.
 Installs the required GPG key for the repository.
 Updates the package lists.
 Ensures your system is ready to install Node.js 18.x via your package manager (apt on Debian-based systems like Ubuntu).
-3.**Install  NodeJs on the server**:
+
+4. **Install  NodeJs on the server**:
 ```
 sudo apt-get install nodejs -y
 ```
 ![Screenshot (133)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/a8c3f421-6fac-47d8-931f-ddc07a460d26)
-Note: the above command installs both node.js and npm. NPM is a package manager for Node just as apt is a package manager for Ubuntu. It is used to install Node modules and packages and to manage dependency conflicts.
+
+**Note:** the above command installs both node.js and npm. NPM is a package manager for Node just as apt is a package manager for Ubuntu. It is used to install Node modules and packages and to manage dependency conflicts.
+
 4.**verify the installation**:
 ```
 node -v        // Gives the node version
-
 npm -v        // Gives the node package manager version
 ```
+
 ![Screenshot (134)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/dc730981-41a9-4c6f-951f-d35eb390aa16)
 ## Application code setup
-1**Create a new directory for your To-Do project**:
+1. **Create a new directory for your To-Do project**:
 ```
 mkdir Todo
 ```
-2.**confirm it has been created**:
+2. **confirm it has been created**:
 ```
 ls
 ```
-3.**enter into the directory**
+3. **enter into the directory**
 ```
 cd Todo
 ```
-4.**Use command npm init to initialize your project in the directory**:
+4. **Use command npm init to initialize your project in the directory**:
 ```
 npm init
 ```
 ![Screenshot (135)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/0b9eb955-29ec-44be-8b8e-fc1c82a8c341)
+
 ## Install ExpressJs
 ExpressJs is a framework for Nodejs therefore a lot of things developers we need to programmed have been taking care of.
-1**Install expressjs using npm**:
+1. **Install expressjs using npm**:
 ```
 npm install express
 ```
 ![Screenshot (136)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e51c625d-bd13-4f75-82f3-1b88862ad1f2)
-2**Create a file index.js**:
+2. **Create a file index.js**:
 ```
 touch index.js
 ```
-3.**Run ls to confirm the file is created**:
+3. **Run ls to confirm the file is created**:
 ```
 ls
 ```
-4.**Install the dotenv module**:
+4. **Install the dotenv module**:
 ```
 npm install dotenv
 ```
 ![Screenshot (137)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/6ed2e62c-0c5e-4cc6-b188-542ac843bdab)
-5.**Open the index.js file**:
+
+5. **Open the index.js file**:
 ```
 vim index.js
 ```
 ![Screenshot (138)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/28de8014-a058-44b3-9401-c55d3281a238)
-6.**Copy and paste the code below into it and save it**:
+
+6. **Copy and paste the code below into it and save it**:
 ```
 const express = require('express');
 require('dotenv').config();
@@ -153,14 +160,18 @@ app.listen(port, () => {
 });
 ```
 ![Screenshot (139)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/80e637cf-66b6-4f3f-b29e-a14349ee31fd)
-7.**it is time so start our server and see how it works**:
+
+7. **it is time so start our server and see how it works**:
 ```
 node index.js
 ```
 ![Screenshot (140)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/39061480-f609-479e-8599-c5296938ccce)
+
 if everything goes well you should see server running on port 5000
+
 8.**Now we need to edit our inbound rule for instance to allow traffic through port 5000**:
 ![Screenshot (141)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/6615f1d2-5c5a-417b-94f6-af47deacf163)
+
 9.**Now open your browser and try access your server follow by port 5000**:
 ```
 http://<public-ip-address>:5000
@@ -211,6 +222,7 @@ router.delete('/todos/:id', (req, res, next) => {
 module.exports = router;
 ```
 ![Screenshot (143)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/277353b9-88aa-4022-a083-3c2460647693)
+
 ## MODELS
 The model in a JavaScript application is crucial for managing and encapsulating the data and business logic. It serves as the central component that the rest of the application interacts with, ensuring that data flows correctly and consistently throughout the system. Whether in a frontend, backend, or full-stack context, the model plays a key role in the application's architecture.
 
