@@ -140,18 +140,32 @@ touch server.js && vim server.js
 ```
 **Copy and paste the web server code below into the server.js file**
 ```
-var express = require('express');
-var bodyParser = require('body-parser');
-var app = express();
-app.use(express.static(__dirname + '/public'));
+const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose'); // Make sure mongoose is installed and required
+const path = require('path'); // To handle static file serving
+const app = express();
+
+// Connect to MongoDB
+mongoose.connect('mongodb://localhost:27017/test', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('MongoDB connected'))
+  .catch(err => console.error('MongoDB connection error:', err));
+
+// Middleware
 app.use(bodyParser.json());
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Routes
 require('./apps/routes')(app);
+
+// Start the server
 app.set('port', 3300);
-app.listen(app.get('port'), function() {
-console.log('Server up: http://localhost:' + app.get('port'));
+app.listen(app.get('port'), () => {
+  console.log('Server up: http://localhost:' + app.get('port'));
 });
 ```
-![Screenshot (191)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f1a1b9f6-34cc-49ec-86aa-5a0ca8d75cdc)
+![Screenshot (202)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/4367a778-a4ce-4bea-90c3-fd26cfd849cb)
+
 
 ## Step 3: Install Express and set up routes to the server
 Express will be used to pass book information to and from our MongoDB database.
@@ -451,7 +465,8 @@ cd ..
 ```
 node server.js
 ```
-![Screenshot (198)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c5088c15-c533-4d7c-ae03-53d76561cc3c)
+![Screenshot (201)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/65a1f8b9-fbf1-4e5c-b1da-160ba0bdddd4)
+
 
 The server is now up and running, we can connect it via port 3300. You can
 launch a separate Putty or SSH console to test what curl command returns locally
@@ -467,6 +482,11 @@ our applicatoin is live
 
 ![Screenshot (199)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f8e01b87-4f2a-4557-a8ba-38fbe0b2ae53)
 
+add books
+
+![Screenshot (203)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/80c37566-eade-4c48-88e2-25f258e56c6e)
+## Conclusion
+The MEAN stack—comprising MongoDB, Express.js, Angular, and Node.js—provides a powerful and cohesive framework for building dynamic and scalable web applications. By leveraging JavaScript across both the client and server sides, developers can streamline the development process and enhance productivity.
 
 
 
