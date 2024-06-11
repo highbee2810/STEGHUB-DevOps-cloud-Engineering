@@ -1,4 +1,4 @@
-# Project Documentation: LAMP Stack on EC2 Instance
+# Project Documentation: Deployment of LAMP Stack on EC2 Instance
 
 ## Overview
 
