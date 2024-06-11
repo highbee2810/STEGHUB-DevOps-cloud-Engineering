@@ -1,4 +1,4 @@
-# Project Documentation: LEMP Stack on EC2 Instance
+# Project Documentation: Deployment of LEMP Stack on EC2 Instance
 
 ## Overview
 
