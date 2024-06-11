@@ -9,7 +9,7 @@ architecture that we have already implemented in previous projects (LAMP,
 LEMP, MEAN, MERN), this architecture can be implemented with many other
 technologies - various Web and DB servers, from small Single-page
 applications SPA to large and complex portals.
-## a quick client-server architecture in action
+## A quick client-server architecture in action
 Open up your Ubuntu or Windows terminal and run curl command:
 ```
 curl -Iv steghub.com
@@ -20,14 +20,14 @@ curl -Iv steghub.com
 apt install curl**
 In this example, your terminal or ubuntu will be the client, while steghub.com will be
 the server.
-**the response from the remote server in above output. You can also see
+**The response from the remote server in above output. You can also see
 that the requests from the URL are being served by a computer with an IP
 address 160.153.133.153 on port 80**
 
 Another simple way to get a server's IP address is to use a simple
 diagnostic tool like 'ping', it will also show round-trip time - time for packets
 to go to and back from the server, this tool uses ICMP protocol.
-##  - Implement a Client Server Architecture using MySQL Database Management System (DBMS).
+## Implement a Client Server Architecture using MySQL Database Management System (DBMS).
 To demonstrate a basic client-server using MySQL RDBMS, follow the below instructions
 
 **1. Create and configure two Linux-based virtual servers (EC2 instances in AWS).**
@@ -91,7 +91,8 @@ Server B name - `mysql client`
 ### The two servers are up and running
 ![Screenshot (207)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e44505c2-0785-470c-821d-5b60f64b629b)
 
-## conect to mysql server using windows terminal
+## Conect to mysql server using windows terminal
+
 **ssh to the instance**
 ```
 ssh -i steghub.pem ubuntu@13.51.205.236
@@ -110,7 +111,7 @@ ssh -i steghub.pem ubuntu@13.51.205.236
    ```
    sudo apt upgrade
    ```
-## On mysql server Linux Server install MySQL Server software.
+
 use the command below to install mysql 
 ```
 sudo apt install mysql-server -y
@@ -119,7 +120,6 @@ sudo apt install mysql-server -y
 
 MySQL is an open-source relational database management system. Its name is a combination of "My", the name of the cofounder Michael Widenius's daughter, and "SQL", the abbreviation
 for Structured Query Language.
-## On mysql client Linux Server install MySQL Client software
 
 ## conect to mysql client using windows terminal
 **ssh to the instance**
@@ -136,7 +136,7 @@ ssh -i steghub.pem ubuntu@13.60.83.92
    ```
    ![Screenshot (210)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/79b646c3-f79d-4ff3-867d-1984ff8d7744)
 
-   
+
 2. **Upgrade ubuntu**:
    ```
    sudo apt upgrade
@@ -146,4 +146,48 @@ ssh -i steghub.pem ubuntu@13.60.83.92
    ```
    ![Screenshot (213)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/a924f813-9f07-4c85-bc05-3dfbd5fe0959)
 By default, the two EC2 virtual servers are located in the same local virtual network, so they can communicate to each other using local IP addresses.
-   
+
+**Edit inbound rule of mysql server to allow traffic into port 3306 , specifying only the mysql client ip address access**
+![Screenshot (214)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/147a42c8-c4bf-4d37-b92b-7397c659cbe4)
+
+**configure MySQL server to allow connections from remote hosts.**
+```
+sudo vim /etc/mysql/mysql.conf.d/mysqld.cnf
+```
+Replace bind location = 127.0.0.1 with 0.0.0.0
+![Screenshot (218)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/894cfd18-30aa-45f2-9819-cee513b3f973)
+
+Access MySQL shell
+```
+sudo mysql
+```
+create a user named 'client'with password
+```
+CREATE USER 'client'@'%' IDENTIFIED WITH mysql_native_password BY 'ibrahimaremu';
+```
+create a databse called test_db
+```
+CREATE DATABASE test_db;
+```
+grant access to 'client' user
+```
+GRANT ALL ON test_db.* TO 'client'@'%' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+```
+![Screenshot (221)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1daed33a-7482-48f9-8a48-4b5e6cbd9ea4)
+
+
+**connect to mysql server using the command below**
+
+```
+sudo mysql -u client -h 13.51.205.236 -p
+```
+![Screenshot (222)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/20cf22b2-0f62-431c-b133-6b3fedd73e9c)
+
+**Check that you have successfully connected to a remote MySQL server and can perform SQL queries**
+```
+Show databases;
+```
+![Screenshot (223)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/ec1a3c12-c084-4527-a097-b196d062fa0b)
+ 
+ we have successfully completed this project - we have deloyed a fully functional MySQL Client-Server set up
