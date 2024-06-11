@@ -92,10 +92,58 @@ Server B name - `mysql client`
 ![Screenshot (207)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e44505c2-0785-470c-821d-5b60f64b629b)
 
 ## conect to mysql server using windows terminal
+**ssh to the instance**
+```
+ssh -i steghub.pem ubuntu@13.51.205.236
+```
+![Screenshot (209)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/562574a4-3a3a-4012-9531-98a181d9c469)
 
 
-    
+1. **Update Package Repository**:
+   ```bash
+   sudo apt update
+   ```
+   ![Screenshot (210)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/79b646c3-f79d-4ff3-867d-1984ff8d7744)
+
+   
+2. **Upgrade ubuntu**:
+   ```
+   sudo apt upgrade
+   ```
+## On mysql server Linux Server install MySQL Server software.
+use the command below to install mysql 
+```
+sudo apt install mysql-server -y
+```
+![Screenshot (211)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f4f36e1f-6ad5-4451-afa9-0a45bd5de0cd)
+
+MySQL is an open-source relational database management system. Its name is a combination of "My", the name of the cofounder Michael Widenius's daughter, and "SQL", the abbreviation
+for Structured Query Language.
+## On mysql client Linux Server install MySQL Client software
+
+## conect to mysql client using windows terminal
+**ssh to the instance**
+```
+ssh -i steghub.pem ubuntu@13.60.83.92
+```
+
+![Screenshot (212)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/fcf9e930-087d-4a0a-9634-ec88dc9f3e6c)
 
 
+1. **Update Package Repository**:
+   ```bash
+   sudo apt update
+   ```
+   ![Screenshot (210)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/79b646c3-f79d-4ff3-867d-1984ff8d7744)
 
-
+   
+2. **Upgrade ubuntu**:
+   ```
+   sudo apt upgrade
+3. **Install MySQL Client software**
+   ```
+   sudo apt install mysql-client -y
+   ```
+   ![Screenshot (213)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/a924f813-9f07-4c85-bc05-3dfbd5fe0959)
+By default, the two EC2 virtual servers are located in the same local virtual network, so they can communicate to each other using local IP addresses.
+   
