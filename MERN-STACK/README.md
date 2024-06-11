@@ -1,4 +1,4 @@
-# Project Documentation: MERN Stack on EC2 Instance
+# Project Documentation: Deployment of MERN Stack on EC2 Instance
 
 ## Overview
 
