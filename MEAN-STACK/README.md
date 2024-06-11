@@ -1,4 +1,4 @@
-# Project Documentation: MEAN Stack on EC2 Instance
+# Project Documentation: Deployment of MEAN Stack on EC2 Instance
 
 ## Overview
 
