@@ -185,7 +185,7 @@ cd apps
 ```
 **Create and open a file named routes.js**
 ```
-vi routes.jzs
+vi routes.js
 ```
 copy and paste the following code into it
 ```
