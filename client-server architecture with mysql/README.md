@@ -35,5 +35,67 @@ To demonstrate a basic client-server using MySQL RDBMS, follow the below instruc
 Server A name - `mysql server`
 Server B name - `mysql client`
 
+## Setting up the  'mysql server'
+
+1. **Launch an EC2 Instance**: 
+   - Sign in to the AWS Management Console.
+   - Navigate to EC2 Dashboard.
+   - Click on "Launch Instance" and choose Ubuntu Server 20.04 LTS as the operating system.
+
+2. **Configure Instance Details**:
+   - Choose instance type, network, subnet, and other settings as per your requirements.
+
+3. **Add Storage**:
+   - Allocate storage space according to your needs.
+
+4. **Add Tags**:
+   - Optionally, add tags for better organization.
+
+
+5. **Configure Security Group**:
+   - Create a new security group or use an existing one.
+   - Allow inbound traffic on ports 80 (HTTP), 22 (SSH), 3306 (mysql) and 443 (HTTPS) from your IP address.
+![Screenshot (57)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c2e660e8-e954-4dd4-88e7-b96749c55fc5)
+
+6. **Review and Launch**:
+   - Review the configuration and launch the instance.
+
+![Screenshot (205)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/70d42e91-d9c1-4c91-ad92-fa71e166babf)
+
+## Setting up the 'mysql client'
+
+1. **Launch an EC2 Instance**: 
+   - Sign in to the AWS Management Console.
+   - Navigate to EC2 Dashboard.
+   - Click on "Launch Instance" and choose Ubuntu Server 20.04 LTS as the operating system.
+
+2. **Configure Instance Details**:
+   - Choose instance type, network, subnet, and other settings as per your requirements.
+
+3. **Add Storage**:
+   - Allocate storage space according to your needs.
+
+4. **Add Tags**:
+   - Optionally, add tags for better organization.
+
+
+5. **Configure Security Group**:
+   - Create a new security group or use an existing one.
+   - Allow inbound traffic on ports 80 (HTTP), 22 (SSH), and 443 (HTTPS) from your IP address.
+![Screenshot (57)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c2e660e8-e954-4dd4-88e7-b96749c55fc5)
+
+6. **Review and Launch**:
+   - Review the configuration and launch the instance.
+![Screenshot (206)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/163c9be7-dc0c-4b7c-a124-6ba40a5e9eb2)
+
+### The two servers are up and running
+![Screenshot (207)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e44505c2-0785-470c-821d-5b60f64b629b)
+
+## conect to mysql server using windows terminal
+
+
+    
+
+
 
 
