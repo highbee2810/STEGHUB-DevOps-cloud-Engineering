@@ -2,9 +2,9 @@
 In this project storage infrastructure will be prepared on two Linux servers and a basic web solution will be implemented using WordPress.
  **WordPress:** WordPress is a free and open-source content management system written in PHP and paired with MySQL or MariaDB as its backend Relational Database Management System (RDBMS)
  ## Project Tasks:
- 1. Configuration of storage subsystem for Web and Database servers based on Linux OS.
+ 1. Configuration of storage subsystems for Web and Database servers based on Linux OS.
  
- 2. Installation of  WordPress and connection to a remote MySQL database server.
+ 2. Installation of WordPress and connection to a remote MySQL database server.
  
 ## Three-Tier Architecture
 ![images](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/743b4345-50ee-4d25-a9eb-8a8a5a5b2529)
