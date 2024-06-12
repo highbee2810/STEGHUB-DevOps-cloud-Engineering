@@ -3,7 +3,9 @@ In this project storage infrastructure will be prepared on two Linux servers and
  **WordPress:** WordPress is a free and open-source content management system written in PHP and paired with MySQL or MariaDB as its backend Relational Database Management System (RDBMS)
  ## Project Tasks:
  1.Configuration of storage subsystem for Web and Database servers based on Linux OS.
+ 
  2.Installation of  WordPress and connection to a remote MySQL database server.
+ 
 ## Three-Tier Architecture
 ![images](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/743b4345-50ee-4d25-a9eb-8a8a5a5b2529)
 
@@ -29,3 +31,64 @@ system such as PostgreSQL, MySQL, MariaDB, Oracle, DB2, Informix or Microsoft SQ
 WordPress)
 3. An EC2 Linux server as a database (DB) server
 ## Web server setup
+1. **Launch an EC2 Instance**: 
+   - Sign in to the AWS Management Console.
+   - Navigate to EC2 Dashboard.
+   - Click on "Launch Instance" and choose RedHat Server as the operating system.
+
+
+2. **Configure Instance Details**:
+   - Choose instance type, network, subnet, and other settings as per your requirements.
+
+3. **Add Storage**:
+   - Allocate storage space according to your needs.
+
+4. **Add Tags**:
+   - Optionally, add tags for better organization.
+5. **Configure Security Group**:
+   - Create a new security group or use an existing one.
+   - Allow inbound traffic on ports 80 (HTTP), 22 (SSH), and 443 (HTTPS) from your IP address
+ 
+6. **Review and Launch**:
+   - Review the configuration and launch the instance.
+         
+7. **Connect to the Instance**:
+   - Use windows terminal to connect to the instance via SSH.
+8. **SSH to the instance**
+ Note: for Ubuntu server, when connecting to it via SSH/Putty or any other tool, we used ubuntu user, but for RedHat you will need to use ec2-user user.
+Connection string will look like ec2-user@<Public-IP>
+```
+ssh -i "steghub.pem" ec2-user@16.170.143.75
+```
+## Database Server setup
+
+1. **Launch an EC2 Instance**: 
+   - Sign in to the AWS Management Console.
+   - Navigate to EC2 Dashboard.
+   - Click on "Launch Instance" and choose RedHat Server as the operating system.
+
+
+2. **Configure Instance Details**:
+   - Choose instance type, network, subnet, and other settings as per your requirements.
+
+3. **Add Storage**:
+   - Allocate storage space according to your needs.
+
+4. **Add Tags**:
+   - Optionally, add tags for better organization.
+     
+5. **Configure Security Group**:
+   - Create a new security group or use an existing one.
+   - Allow inbound traffic on ports 80 (HTTP), 22 (SSH), and 443 (HTTPS) from your IP address
+ 
+6. **Review and Launch**:
+   - Review the configuration and launch the instance.
+         
+7. **Connect to the Instance**:
+   - Use windows terminal to connect to the instance via SSH.
+8. **SSH to the instance**
+ Note: for Ubuntu server, when connecting to it via SSH/Putty or any other tool, we used ubuntu user, but for RedHat you will need to use ec2-user user.
+Connection string will look like ec2-user@<Public-IP>
+```
+ssh -i "steghub.pem" ec2-user@16.170.143.75
+```
