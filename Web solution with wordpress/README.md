@@ -206,6 +206,7 @@ sudo systemctl daemon-reload
    - Sign in to the AWS Management Console.
    - Navigate to EC2 Dashboard.
    - Click on "Launch Instance" and choose RedHat Server as the operating system.
+![Screenshot (250)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/5ce8cc0d-bd31-4b42-9a3e-dd4930cc46c6)
 
 
 2. **Configure Instance Details**:
@@ -232,3 +233,99 @@ Connection string will look like ec2-user@<Public-IP>
 ```
 ssh -i "steghub.pem" ec2-user@16.170.143.75
 ```
+![Screenshot (251)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/45732530-9902-4b0d-a693-2b8f1f2458bb)
+
+Repeat the same steps as for the Web Server, but instead of appslv create db-lv and mount it to /db directory instead of /var/www/html/.
+**". Create 3 volumes in the same AZ as your Web Server EC2, each of 10 GiB.**
+![Screenshot (253)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/6ae4ed6b-1562-4f67-a401-27a199a03e17)
+
+**Use lsblk command to inspect what block devices are attached to the server.**
+```
+lsblk
+```
+![Screenshot (252)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c34b81e8-5995-4931-aac2-397473b0ff9e)
+
+**Use df -h to see all mounts and free space on the server.**
+```
+df -h
+```
+![Screenshot (254)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/b35044d8-e325-4fa2-b290-3d1b1d6d866d)
+
+**Use gdisk utility to create a single partition on each of the 3 disks**
+```
+sudo gdisk /dev/nvme1n1
+sudo gdisk /dev/nvme2n1
+sudo gdisk /dev/nvme3n1
+```
+![Screenshot (254)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/b128e625-808c-4952-ab78-7aded0dace71)
+
+**Use lsblk utility to view the newly configured partition on each of the 3 disks.**
+```
+lsblk
+```
+![Screenshot (256)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/296ead5c-6888-4054-80be-249d8797bcb4)
+ Install lvm2 package using 
+```
+sudo yum install lvm2
+```
+![Screenshot (257)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/85bd8ceb-3a2a-4ab3-bf95-dffc09bad31d)
+
+ Run``` sudo lvmdiskscan ``` command to check for available partitions
+![Screenshot (258)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/483b1d78-b938-4e53-a3ae-6eef6fc0a6d5)
+
+**Use pvcreate utility to mark each of 3 disks as physical volumes (PVs) to be used by LVM**
+```
+sudo pvcreate /dev/nvme1n1p1
+sudo pvcreate /dev/nvme2n1p1
+sudo pvcreate /dev/nvme3n1p1
+```
+![Screenshot (236)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/8e450053-6f3e-4d24-bf4c-ce5e515f145a)
+**Verify that your Physical volume has been created successfully by running sudo pvs**
+```sudo pvs```
+
+![Screenshot (237)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1143f0ae-7a2d-4f4c-9fc1-ebfcb88b98a1)
+
+**Use vgcreate utility to add all 3 PVs to a volume group (VG). Name the VG webdata-vg**
+```
+sudo vgcreate database-vg /dev/nvme1n1p1 /dev/nvme2n1p1 /dev/nvme3n1p1
+```
+![Screenshot (259)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/31c93d28-73ac-4687-844e-5ca23b0e0a7f)
+
+**Verify that your VG has been created successfully by running ```sudo vgs``**
+![Screenshot (260)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e93e8600-4aa6-4146-abd3-8a36bdbd6544)
+
+**Use lvcreate utility to create a logical volume, db-lv (Use 20G of the PV size since it is the only LV to be created). Verify that the logical volumes have been created successfully**
+```
+sudo lvcreate -n db-lv -L 20G database-vg
+sudo lvs
+```
+![Screenshot (261)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/7f0ae74f-79b8-42f8-847d-a623cd29d973)
+
+**Use mkfs.ext4 to format the logical volumes with ext4 filesystem and monut /db on db-lv**
+```
+sudo mkfs.ext4 /dev/database-vg/db-lv
+sudo mount /dev/database-vg/db-lv /db
+```
+![Screenshot (262)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/05298c14-4fa7-4aef-8d6e-2ee2537711e7)
+
+ Update /etc/fstab file so that the mount configuration will persist after restart of the server Get the UUID of the device
+ ```
+sudo blkid
+```
+
+Update the /etc/fstab file with the format shown inside the file using the UUID. Remember to remove the leading and ending quotes
+```
+sudo vi /etc/fstab
+```
+![Screenshot (263)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/b6f8b512-d830-43c7-9d78-626ee15af336)
+
+**Test the configuration and reload daemon. Verify the setup**
+```
+sudo mount -a   # Test the configuration
+
+sudo systemctl daemon-reload
+
+df -h   # Verifies the setup
+```
+![Screenshot (264)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/ae0787fe-18cc-4810-bf26-e8954978749f)
+
