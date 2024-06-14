@@ -328,4 +328,108 @@ sudo systemctl daemon-reload
 df -h   # Verifies the setup
 ```
 ![Screenshot (264)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/ae0787fe-18cc-4810-bf26-e8954978749f)
+## Step 3: Install wordpress on webserver ec2 instance
+**1. Update the repository**
+```
+sudo yum -y update
+```
+**2. Install wget, Apache and it's dependencies**
+```
+sudo yum -y install wget httpd php php-mysqlnd php-fpm php-json
+```
+![Screenshot (265)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/d76f9ab7-5c87-4769-8931-8145d8a6ef1a)
+
+**3. Start Apache**
+```
+sudo systemctl enable httpd
+sudo systemctl start httpd
+```
+![Screenshot (266)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e8da0c51-2307-40d1-ac5d-8c7d65605549)
+
+**4. To install PHP and it's dependencies**
+**Enable EPEL Repository**
+```
+sudo dnf install -y epel-release
+```
+**Enable Remi Repository:**
+```
+sudo dnf install -y https://rpms.remirepo.net/enterprise/remi-release-9.rpm
+```
+**Enable the PHP Module using dnf:**
+```
+sudo dnf module reset php
+sudo dnf module enable php:8.2
+```
+**Install PHP:**
+```
+sudo dnf install -y php php-cli php-fpm php-json php-common php-mysqlnd php-zip php-gd php-mbstring php-curl php-xml php-pear php-bcmath php-json
+```
+**Start and Enable PHP-FPM Service:**
+```
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+```
+**Verify PHP Installation:**
+```
+php -v
+```
+![Screenshot (267)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/31fdfbe3-aede-445f-ae54-fedf55313368)
+**Restart Apache**
+```
+sudo systemctl restart httpd
+```
+**Download wordpress and copy wordpress to /var/www/htmlmkdir wordpress**
+```
+mkdir wordpress
+sudo wget http://wordpress.org/latest.tar.gz sudo tar xzvf latest.tar.gz
+sudo rm -rf latest.tar.gz cp wordpress/wp-config-sample.php wordpress/wpconfig.php
+cp -R wordpress /var/www/html/
+```
+![Screenshot (268)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/636d53a6-c7f6-4149-9aea-0f2647e09b31)
+
+**Configure SELinux Policies**
+```
+sudo chown -R apache:apache /var/www/html/wordpress
+sudo chcon -t httpd_sys_rw_content_t /var/www/html/wordpress -R
+sudo setsebool -P httpd_can_network_connect=1
+```
+
+## Step 4 — Install MySQL on your DB Server EC2**
+```
+sudo yum update
+sudo yum install mysql-server
+```
+Verify that the service is up and running by using ``` sudo systemctl status mysql```,
+if it is not running, restart the service and enable it so it will be running even
+```
+sudo systemctl restart mysqld
+sudo systemctl enable mysqld
+```
+![Screenshot (269)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/a72c0262-efb1-4a50-ba03-6b48d56e471a)
+
+## Step 5 — Configure DB to work with WordPress
+```
+sudo mysql
+CREATE DATABASE wordpress;
+CREATE USER `myuser`@`16.171.12.79` IDENTIFIED BY
+'mypass';
+GRANT ALL ON wordpress.* TO 'myuser'@'16.171.12.79';
+FLUSH PRIVILEGES;
+SHOW DATABASES;
+exit
+```
+![Screenshot (270)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c913cb0a-80c8-4f7e-830d-e0645d6a802f)
+## Step 6 — Configure WordPress to connect to remote database.
+Do not forget to open MySQL port 3306 on DB Server EC2. For extra security, you shall allow access to the DB server ONLY from your Web
+Server's IP address, so in the Inbound Rule configuration specify source as /32
+![Screenshot (271)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/a6f49296-ccd7-4401-a305-2b6acd8c2f36)
+
+
+**. Install MySQL client and test that you can connect from your Web Server to your DB server by using mysql-client**
+```
+sudo yum install mysql
+mysql -u myuser -p -h 13.60.47.222
+```
+![Screenshot (273)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/0b9f6925-e5c1-4f54-a044-d4562ccb1fa8)
+
 
