@@ -432,4 +432,10 @@ mysql -u myuser -p -h 13.60.47.222
 ```
 ![Screenshot (273)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/0b9f6925-e5c1-4f54-a044-d4562ccb1fa8)
 
+Access the webpage using browser
+![Screenshot (281)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/0ff229ea-f25f-4d2f-8822-3c4aee413862)
 
+configure and download wordpress
+![Screenshot (282)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/496902b0-8d63-49c3-9ffa-23f60b95dec4)
+
+![Screenshot (283)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/4fefe0b8-af97-4d1e-84f4-e02cf69c62a7)
