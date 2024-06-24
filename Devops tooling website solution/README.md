@@ -114,3 +114,41 @@ rpcinfo -p | grep nfs
 Important note: In order for NFS server to be accessible from your client, you must also open following ports: TCP 111, UDP 111, UDP 2049
 
 ![Screenshot (297)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/cc61f5e9-b124-4ca1-89ce-1d8eb4230b35)
+
+## Step 2 — Configure the database server
+launch an Ec2 instance with neccessary configurations
+
+![Screenshot (298)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/e9706e72-9736-4bce-b868-45b8cd1356d9)
+
+ssh into the instance
+![Screenshot (299)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/79e5bfe7-3a47-4cd9-897b-aa9268ac0221)
+
+Install MySQL server
+```
+sudo apt install mysql-server
+```
+Run mysql secure script
+```
+sudo mysql_secure_installation
+```
+![Screenshot (301)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/807c9e51-b8fb-4f35-8ee7-662ce0325c90)
+
+Create a database and name it tooling
+Create a database user and name it webaccess
+Grant permission to webaccess user on tooling database to do anything only from the webservers subnet cidr
+![Screenshot (302)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/dc1c61ba-665b-4a9d-96b3-a3473eb94a58)
+Set Bind Address and restart MySQL
+```
+sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
+
+sudo systemctl restart mysql
+sudo systemctl status mysql
+```
+![Screenshot (303)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/8f8179c3-7389-4402-9264-3c952ffe7e16)
+![Screenshot (304)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/ddf0fc45-8c89-44f7-a829-f41a15f42e7b)
+![Screenshot (305)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/b8ab9986-e25c-42a0-887f-bfd6fd8f2b68)
+
+
+
+## Step 3 — Prepare the Web Servers
+
