@@ -2,12 +2,12 @@
 This project introduces a set of DevOps tools that will help  in day to day activities in managing, developing, testing, deploying and monitoring different projects.
 
 ## In this project a solution that consists of following components will be implemented:
-1.**Infrastrucure**: AWS
-2.**Web server**: : Red Hat Enterprise Linux 8
-3.**Database server**: Ubuntu 24.04 + MySQL
-4.**Storage server**: Red Hat Enterprise Linux 8 + NFS Server
-5.**Programming Language**: PHP
-6.**Code Repository:** Github
+### 1.**Infrastrucure**: AWS
+### 2.**Web server**: : Red Hat Enterprise Linux 8
+### 3.**Database server**: Ubuntu 24.04 + MySQL
+### 4.**Storage server**: Red Hat Enterprise Linux 8 + NFS Server
+### 5.**Programming Language**: PHP
+### 6.**Code Repository:** Github
 
 ## Step 1 - Prepare NFS Server
 1. Spin up a new EC2 instance with RHEL Linux  Operating System.
