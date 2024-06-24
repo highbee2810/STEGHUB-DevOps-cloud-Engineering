@@ -19,6 +19,7 @@ Configure the inbound rules to allow http and https and attached 3 volumes befor
 3. Configure LVM on the Server. format the disks as xfs
 Ensure there are 3 Logical Volumes. lv-opt lv-apps, and lv-logs
 ![Screenshot (286)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/fb8681e2-2791-4ed1-ae0f-6902880170a9)
+
 ```
 lsblk
 gdisk
@@ -45,6 +46,7 @@ sudo mkfs -t xfs /dev/NFS-vg/lv-opt
 Mount lv-apps on /mnt/apps - To be used by webservers
 Mount lv-logs on /mnt/logs - To be used by webserver logs 
 Mount lvopt on /mnt/opt - To be used by Jenkins server in Project 8
+
 ```
 sudo mkdir /mnt/apps
 sudo mkdir /mnt/logs
@@ -61,11 +63,12 @@ sudo mount /dev/NFS-vg/lv-logs /mnt/logs
 ![Screenshot (290)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/0fa6f639-89b2-471b-914d-4bc6cea27d91)
 
 6. Install NFS server, configure it to start on reboot and make sure it is up and running
-   ```
+ ```
  sudo yum update -y
  sudo yum install nfs-utils -y
 ```
 ![Screenshot (291)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/8611dcb9-9928-4574-8f81-94a9d679b71e)
+
 ```
 sudo systemctl start nfs-server.service
 sudo systemctl enable nfs-server.service
@@ -77,6 +80,7 @@ sudo systemctl status nfs-server.service
 each tier inside its own subnet for higher level of security. To check your subnet cidr - open your EC2 details in AWS web console and locate 'Networking' tab and open a Subnet link:
 
 Set up permission that will allow the Web Servers to read, write and execute files on NFS
+
 ```
 sudo chown -R nobody: /mnt/apps
 sudo chown -R nobody: /mnt/logs
@@ -91,6 +95,7 @@ sudo systemctl restart nfs-server.service
 ![Screenshot (293)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/349a4241-40ae-45c7-8196-5f098f69c8ae)
 
 Configure access to NFS for clients within the same subnet (example Subnet Cidr - 172.31.32.0/20)
+
 ```
 sudo vi /etc/exports
 
@@ -106,6 +111,7 @@ sudo exportfs -arv
 
 
 8.Check which port is used by NFS and open it using Security Groups (add new Inbound Rule)
+
 ```
 rpcinfo -p | grep nfs
 ```
@@ -124,10 +130,12 @@ ssh into the instance
 ![Screenshot (299)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/79e5bfe7-3a47-4cd9-897b-aa9268ac0221)
 
 Install MySQL server
+
 ```
 sudo apt install mysql-server
 ```
 Run mysql secure script
+
 ```
 sudo mysql_secure_installation
 ```
@@ -136,8 +144,25 @@ sudo mysql_secure_installation
 Create a database and name it tooling
 Create a database user and name it webaccess
 Grant permission to webaccess user on tooling database to do anything only from the webservers subnet cidr
+
+```
+sudo mysql
+
+CREATE DATABASE tooling;
+CREATE USER 'webaccess'@'172.31.16.0/20' IDENTIFIED WITH mysql_native_password BY 'Admin123$';
+GRANT ALL PRIVILEGES ON tooling.* TO 'webaccess'@'172.31.16.0/20' WITH GRANT OPTION;
+FLUSH PRIVILEGES;
+show databases;
+
+use tooling;
+select host, user from mysql.user;
+exit
+```
+
 ![Screenshot (302)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/dc1c61ba-665b-4a9d-96b3-a3473eb94a58)
+
 Set Bind Address and restart MySQL
+
 ```
 sudo vi /etc/mysql/mysql.conf.d/mysqld.cnf
 
