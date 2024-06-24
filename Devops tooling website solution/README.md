@@ -1,7 +1,7 @@
 # DevOps Tooling Website Solution- Documentation.
 This project introduces a set of DevOps tools that will help  in day to day activities in managing, developing, testing, deploying and monitoring different projects.
 
-## in this project you will implement a solution that consists of following components:
+## In this project a solution that consists of following components will be implemented:
 1.**Infrastrucure**: AWS
 2.**Web server**: : Red Hat Enterprise Linux 8
 3.**Database server**: Ubuntu 24.04 + MySQL
