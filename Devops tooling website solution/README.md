@@ -176,4 +176,52 @@ sudo systemctl status mysql
 
 
 ## Step 3 — Prepare the Web Servers
+We need to make sure that our Web Servers can serve the same content from shared storage solutions, in our case - NFS Server and MySQL database.
+During the next steps the following will be done:
+1. Configure NFS client (this step must be done on all three servers)
+2. Deploy a Tooling application to our Web Servers into a shared NFS folder
+3. Configure the Web Servers to work with a single MySQL database.
 
+1. Launch a new EC2 instance with RHEL 8 Operating System
+   ![Screenshot (298)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f8e7994e-6ba9-4336-8fac-f848d5756d0d)
+2. Install NFS client
+   ```
+   sudo yum install nfs-utils nfs4-acl-tools -y
+   ```
+   ![Screenshot (306)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/6e4b315c-b456-489f-8b70-e5ef3f470498)
+
+   
+3. Mount /var/www/ and target the NFS server's export for apps
+```
+sudo mkdir /var/www
+sudo mount -t nfs -o rw,nosuid 172.31.30.235:/mnt/apps /var/www
+```
+![Screenshot (307)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1e33c1de-99ea-4970-a54a-2391e620364d)
+
+4. Verify that NFS was mounted successfully by running df -h. Make sure that the changes will persist on Web Server after reboot:
+![Screenshot (308)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/87144672-e42e-431d-bbab-b2ea44f4c4ac)
+
+```
+sudo vi /etc/fstab
+```
+add the following
+
+```
+172.31.30.235:/mnt/apps /var/www nfs defaults 0 0
+```
+![Screenshot (309)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/41452173-c114-42ed-b856-070919d84da8)
+
+5. Install Remi's repoeitory, Apache and PHP
+   ```
+   sudo yum install httpd -y
+   ```
+  ![Screenshot (310)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f32e7f2b-141d-4164-af82-e3f2198a89bc)
+
+```
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+```
+![Screenshot (311)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/7a70a4ee-a883-4aba-8054-67f42ed26ef2)
+
+```
+sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm
+```
