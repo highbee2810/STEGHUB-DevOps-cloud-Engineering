@@ -225,3 +225,184 @@ sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noa
 ```
 sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm
 ```
+```
+sudo dnf module enable php:remi-8.2
+sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
+
+```
+
+```
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+sudo systemctl status php-fpm
+
+sudo setsebool -P httpd_execmem 1  # Allows the Apache HTTP server (httpd) to execute memory that it can also write to. This is often needed for certain types of dynamic content and applications that may need to generate and execute code at runtime.
+sudo setsebool -P httpd_can_network_connect=1   # Allows the Apache HTTP server to make network connections to other servers.
+sudo setsebool -P httpd_can_network_connect_db=1  # allows the Apache HTTP server to connect to remote database servers.
+```
+## web server 2
+1.**launch another Ec2 instance with RHEL operating system**
+   ![Screenshot (298)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f8e7994e-6ba9-4336-8fac-f848d5756d0d)
+2. Install NFS client
+   ```
+   sudo yum install nfs-utils nfs4-acl-tools -y
+   ```
+   ![Screenshot (306)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/6e4b315c-b456-489f-8b70-e5ef3f470498)
+
+   
+3. Mount /var/www/ and target the NFS server's export for apps
+```
+sudo mkdir /var/www
+sudo mount -t nfs -o rw,nosuid 172.31.30.235:/mnt/apps /var/www
+```
+![Screenshot (307)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1e33c1de-99ea-4970-a54a-2391e620364d)
+
+4. Verify that NFS was mounted successfully by running df -h. Make sure that the changes will persist on Web Server after reboot:
+![Screenshot (308)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/87144672-e42e-431d-bbab-b2ea44f4c4ac)
+
+```
+sudo vi /etc/fstab
+```
+add the following
+
+```
+172.31.30.235:/mnt/apps /var/www nfs defaults 0 0
+```
+![Screenshot (309)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/41452173-c114-42ed-b856-070919d84da8)
+
+5. Install Remi's repoeitory, Apache and PHP
+   ```
+   sudo yum install httpd -y
+   ```
+  ![Screenshot (310)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f32e7f2b-141d-4164-af82-e3f2198a89bc)
+
+```
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+```
+![Screenshot (311)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/7a70a4ee-a883-4aba-8054-67f42ed26ef2)
+
+```
+sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm
+```
+```
+sudo dnf module enable php:remi-8.2
+sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
+
+```
+
+```
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+sudo systemctl status php-fpm
+
+sudo setsebool -P httpd_execmem 1  # Allows the Apache HTTP server (httpd) to execute memory that it can also write to. This is often needed for certain types of dynamic content and applications that may need to generate and execute code at runtime.
+sudo setsebool -P httpd_can_network_connect=1   # Allows the Apache HTTP server to make network connections to other servers.
+sudo setsebool -P httpd_can_network_connect_db=1  # allows the Apache HTTP server to connect to remote database servers.
+```
+## web server 3
+**1.launch another Ec2 instance with RHEL operating system**
+   ![Screenshot (298)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f8e7994e-6ba9-4336-8fac-f848d5756d0d)
+2. Install NFS client
+   ```
+   sudo yum install nfs-utils nfs4-acl-tools -y
+   ```
+   ![Screenshot (306)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/6e4b315c-b456-489f-8b70-e5ef3f470498)
+
+   
+3. Mount /var/www/ and target the NFS server's export for apps
+```
+sudo mkdir /var/www
+sudo mount -t nfs -o rw,nosuid 172.31.30.235:/mnt/apps /var/www
+```
+![Screenshot (307)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1e33c1de-99ea-4970-a54a-2391e620364d)
+
+4. Verify that NFS was mounted successfully by running df -h. Make sure that the changes will persist on Web Server after reboot:
+![Screenshot (308)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/87144672-e42e-431d-bbab-b2ea44f4c4ac)
+
+```
+sudo vi /etc/fstab
+```
+add the following
+
+```
+172.31.30.235:/mnt/apps /var/www nfs defaults 0 0
+```
+![Screenshot (309)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/41452173-c114-42ed-b856-070919d84da8)
+
+5. Install Remi's repoeitory, Apache and PHP
+   ```
+   sudo yum install httpd -y
+   ```
+  ![Screenshot (310)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f32e7f2b-141d-4164-af82-e3f2198a89bc)
+
+```
+sudo dnf install https://dl.fedoraproject.org/pub/epel/epel-release-latest-9.noarch.rpm
+```
+![Screenshot (311)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/7a70a4ee-a883-4aba-8054-67f42ed26ef2)
+
+```
+sudo dnf install dnf-utils http://rpms.remirepo.net/enterprise/remi-release-9.rpm
+```
+```
+sudo dnf module enable php:remi-8.2
+sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
+
+```
+
+```
+sudo systemctl start php-fpm
+sudo systemctl enable php-fpm
+sudo systemctl status php-fpm
+
+sudo setsebool -P httpd_execmem 1  # Allows the Apache HTTP server (httpd) to execute memory that it can also write to. This is often needed for certain types of dynamic content and applications that may need to generate and execute code at runtime.
+sudo setsebool -P httpd_can_network_connect=1   # Allows the Apache HTTP server to make network connections to other servers.
+sudo setsebool -P httpd_can_network_connect_db=1  # allows the Apache HTTP server to connect to remote database servers.
+```
+## Fork the tooling source code from steghub github account.
+![Screenshot (335)](https://github.com/user-attachments/assets/5d56c122-89e3-4309-a44d-9394947630c7)
+
+**Deploy the tooling Website's code to the Web Server. Ensure that the html folder from the repository is deplyed to /var/www/html**
+1.**install git**
+```
+sudo yum install git
+```
+2.**Initialize git**
+```
+git init
+```
+3. **clone the forked repository**
+   ```
+   git clone https://github.com/highbee2810/tooling.git
+   ```
+Note: Acces the website on a browser
+
+Ensure TCP port 80 is open on the Web Server.
+If 403 Error occur, check permissions to the /var/www/html folder and also disable SELinux
+```
+sudo setenforce 0
+```
+To make the change permanent, open selinux file and set selinux to disable.
+```
+sudo vi /etc/sysconfig/selinux
+
+SELINUX=disabled
+
+sudo systemctl restart httpd
+```
+**Update the website's configuration to connect to the database in (/var/www/html/function.php file). Apply tooling-db.sql command sudo mysql -h <db-private-IP> -u <db-username> -p <db-password < tooling-db.sql**
+```
+sudo vi /var/www/html/functions.php
+```
+```
+sudo mysql -h 172.31.24.101 -u webaccess -p tooling < tooling-db.sql
+```
+**Create in MyQSL a new admin user with username: myuser and password: password**
+```
+INSERT INTO users(id, username, password, email, user_type, status) VALUES (2, 'myuser', '5f4dcc3b5aa765d61d8327deb882cf99', 'user@mail.com', 'admin', '1');
+```
+ **Open a browser and access the website using the Web Server public IP address http://<Web-Server-public-IP-address>/index.php. Ensure login into the website with myuser user.**
+ 
+ 
+![Screenshot (333)](https://github.com/user-attachments/assets/e93233d2-3824-40f7-af53-70ba9b7dd2c0)
+## access the website
+![Screenshot (334)](https://github.com/user-attachments/assets/222021b9-ee1b-4e84-bfbc-aead9a358f19)
