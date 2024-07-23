@@ -194,7 +194,7 @@ During the next steps the following will be done:
 3. Mount /var/www/ and target the NFS server's export for apps
 ```
 sudo mkdir /var/www
-sudo mount -t nfs -o rw,nosuid 172.31.30.235:/mnt/apps /var/www
+sudo mount -t nfs -o rw,nosuid 172.31.28.107:/mnt/apps /var/www
 ```
 ![Screenshot (307)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1e33c1de-99ea-4970-a54a-2391e620364d)
 
@@ -207,7 +207,7 @@ sudo vi /etc/fstab
 add the following
 
 ```
-172.31.30.235:/mnt/apps /var/www nfs defaults 0 0
+172.31.28.107:/mnt/apps /var/www nfs defaults 0 0
 ```
 ![Screenshot (309)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/41452173-c114-42ed-b856-070919d84da8)
 
@@ -253,7 +253,7 @@ sudo setsebool -P httpd_can_network_connect_db=1  # allows the Apache HTTP serve
 3. Mount /var/www/ and target the NFS server's export for apps
 ```
 sudo mkdir /var/www
-sudo mount -t nfs -o rw,nosuid 172.31.30.235:/mnt/apps /var/www
+sudo mount -t nfs -o rw,nosuid 172.31.28.107:/mnt/apps /var/www
 ```
 ![Screenshot (307)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1e33c1de-99ea-4970-a54a-2391e620364d)
 
@@ -266,7 +266,7 @@ sudo vi /etc/fstab
 add the following
 
 ```
-172.31.30.235:/mnt/apps /var/www nfs defaults 0 0
+172.31.28.107:/mnt/apps /var/www nfs defaults 0 0
 ```
 ![Screenshot (309)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/41452173-c114-42ed-b856-070919d84da8)
 
@@ -312,7 +312,7 @@ sudo setsebool -P httpd_can_network_connect_db=1  # allows the Apache HTTP serve
 3. Mount /var/www/ and target the NFS server's export for apps
 ```
 sudo mkdir /var/www
-sudo mount -t nfs -o rw,nosuid 172.31.30.235:/mnt/apps /var/www
+sudo mount -t nfs -o rw,nosuid 172.31.28.107:/mnt/apps /var/www
 ```
 ![Screenshot (307)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/1e33c1de-99ea-4970-a54a-2391e620364d)
 
@@ -325,7 +325,7 @@ sudo vi /etc/fstab
 add the following
 
 ```
-172.31.30.235:/mnt/apps /var/www nfs defaults 0 0
+172.31.28.107:/mnt/apps /var/www nfs defaults 0 0
 ```
 ![Screenshot (309)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/41452173-c114-42ed-b856-070919d84da8)
 
@@ -353,11 +353,17 @@ sudo dnf install php php-opcache php-gd php-curl php-mysqlnd
 sudo systemctl start php-fpm
 sudo systemctl enable php-fpm
 sudo systemctl status php-fpm
+```
+![Screenshot (337)](https://github.com/user-attachments/assets/30b53656-8071-49d6-82ba-2d5bbd99860e)
 
+
+```
 sudo setsebool -P httpd_execmem 1  # Allows the Apache HTTP server (httpd) to execute memory that it can also write to. This is often needed for certain types of dynamic content and applications that may need to generate and execute code at runtime.
 sudo setsebool -P httpd_can_network_connect=1   # Allows the Apache HTTP server to make network connections to other servers.
 sudo setsebool -P httpd_can_network_connect_db=1  # allows the Apache HTTP server to connect to remote database servers.
 ```
+![Screenshot (338)](https://github.com/user-attachments/assets/e7d2d58e-abaf-427b-90e3-1926725c10f8)
+
 ## Fork the tooling source code from steghub github account.
 ![Screenshot (335)](https://github.com/user-attachments/assets/5d56c122-89e3-4309-a44d-9394947630c7)
 
@@ -366,6 +372,8 @@ sudo setsebool -P httpd_can_network_connect_db=1  # allows the Apache HTTP serve
 ```
 sudo yum install git
 ```
+![Screenshot (336)](https://github.com/user-attachments/assets/c17455ed-3732-4d62-ab9e-74521a8076ab)
+
 2.**Initialize git**
 ```
 git init
@@ -396,7 +404,7 @@ sudo vi /var/www/html/functions.php
 ```
 sudo mysql -h 172.31.24.101 -u webaccess -p tooling < tooling-db.sql
 ```
-**Create in MyQSL a new admin user with username: myuser and password: password**
+**Create in MySQL a new admin user with username: myuser and password: password**
 ```
 INSERT INTO users(id, username, password, email, user_type, status) VALUES (2, 'myuser', '5f4dcc3b5aa765d61d8327deb882cf99', 'user@mail.com', 'admin', '1');
 ```
