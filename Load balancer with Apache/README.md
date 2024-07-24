@@ -5,19 +5,6 @@
 3. an ubuntu server(the load balancer server)
 4. Db server.
 ## This project is the continuation of the devops tooling website solution where we have our web servers up and running , the NFS server and the DB server.
-you might wonder how a user will be accessing each of the webservers using 3 different IP addreses or 3 different DNS names. You might also wonder
-what is the point of having 3 different servers doing exactly the same thing. When we access a website in the Internet we use an URL and we do not
-really know how many servers are out there serving our requests, this complexity is hidden from a regular user, but in case of websites that are 
-being visited by millions of users per day (like Google or Reddit) it is impossible to serve all the users from a single Web Server (it is also
-applicable to databases, but for now we will not focus on distributed DBs).
-
-When you have just one Web server and load increases - you want to serve more and more customers, you can add more CPU and RAM or completely
-replace the server with a more powerful one - this is called "vertical scaling". This approach has limitations - at some point you reach the
-maximum capacity of CPU and RAM that can be installed into your server. Another approach used to cater for increased traffic is "horizontal
-scaling" - distributing load across multiple Web servers. This approach is much more common and can be applied almost seamlessly and almost
-infinitely (you can imagine how many server Google has to serve billions of search requests). Horizontal scaling allows to adapt to current load by adding (scale out) or
-removing (scale in) Web servers. Adjustment of number of servers can be done manually or automatically (for example, based on some monitored
-metrics like CPU and Memory load). Property of a system (in our case it is Web tier) to be able to handle growing load by adding resources, is called "Scalability".
 **In our set up in Project-7 we had 3 Web Servers and each of them had its own public IP address and public DNS name. A client has to access them by
 using different URLs, which is not a nice user experience to remember addresses/names of even 3 server, let alone millions of Google servers.
 In order to hide all this complexity and to have a single point of access with a single public IP address/name, a Load Balancer can be used. A Load
