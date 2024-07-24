@@ -1,4 +1,4 @@
-# This project Aims to demonstrate how Apache can be used as load balance to spread incoming traffices accross multiple web servers
+# This project Aims to demonstrate how Apache can be used as load balancer to spread incoming traffics accross multiple web servers
 ## requirements:
 1. Web servers(three RHEL 8 Ec2 instances)
 2. NFS server
