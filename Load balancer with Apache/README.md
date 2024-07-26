@@ -142,15 +142,17 @@ sudo vi /etc/hosts
 172.31.28.103 Web1
 172.31.30.125 Web2
 ```
-Now you can update your LB config file with those names instead of IP
-addresses.
-
+![Screenshot (355)](https://github.com/user-attachments/assets/28c368ac-a923-4077-a2c6-13458975ad7e)
+Now you can update your LB connfig file with those names instead of IP addresses.
 ```
 BalancerMember http://Web1:80 loadfactor=5 timeout=1
 BalancerMember http://Web2:80 loadfactor=5 timeout=1
 ```
+![Screenshot (357)](https://github.com/user-attachments/assets/afb9c1de-9658-472a-b301-43c6aebe735d)
+
 You can try to curl your Web Servers from LB locally curl http://Web1 or curl http://Web2 - it shall work.
 this is only internal configuration and it is also local to your LB server, these names will neither be 'resolvable' from other servers internally nor from the Internet.
+![Screenshot (358)](https://github.com/user-attachments/assets/2ac2ff78-2a15-497c-bc89-6b6914b17820)
 
 
     
