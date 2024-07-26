@@ -131,7 +131,26 @@ command:**
 ```
 sudo tail -f /var/log/httpd/access_log
 ```
+## Optional Step - Configure Local DNS Names Resolution
+When managing multiple servers one can locally configure DNS names to identify the servers
+**Open this file on your LB server**
+```
+sudo vi /etc/hosts
+```
+**Add 2 records into this file with Local IP address and arbitrary name for both of your Web Servers**
+```
+172.31.28.103 Web1
+172.31.30.125 Web2
+```
+Now you can update your LB config file with those names instead of IP
+addresses.
 
+```
+BalancerMember http://Web1:80 loadfactor=5 timeout=1
+BalancerMember http://Web2:80 loadfactor=5 timeout=1
+```
+You can try to curl your Web Servers from LB locally curl http://Web1 or curl http://Web2 - it shall work.
+this is only internal configuration and it is also local to your LB server, these names will neither be 'resolvable' from other servers internally nor from the Internet.
 
 
     
