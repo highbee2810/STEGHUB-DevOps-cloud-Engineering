@@ -33,7 +33,13 @@ Here is how your updated architecture will look upon competion of this project
 
 6. **Review and Launch**:
    - Review the configuration and launch the instance.
+![Screenshot (360)](https://github.com/user-attachments/assets/05843db2-975f-4029-a1a7-6fff430cc14f)
 
-![created EC2 instance](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f0c3258d-8ee6-42e3-adc5-aa9daaea10a4)
-    
+
+2. **Install JDK (since Jenkins is a Java-based application)**
+   ```
+   sudo apt update
+   sudo apt install default-jdk-headless
+   ```
+
 
