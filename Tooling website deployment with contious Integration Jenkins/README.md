@@ -11,4 +11,29 @@ Here is how your updated architecture will look upon competion of this project
 
 **STEP -1: Install Jenkins server**
 1. Create an aws ec2 ubuntu server 20.04 Lts and name it jenkins
-2. 
+   1. **Launch an EC2 Instance**: 
+   - Sign in to the AWS Management Console.
+   - Navigate to EC2 Dashboard.
+   - Click on "Launch Instance" and choose Ubuntu Server 20.04 LTS as the operating system.
+
+2. **Configure Instance Details**:
+   - Choose instance type, network, subnet, and other settings as per your requirements.
+
+3. **Add Storage**:
+   - Allocate storage space according to your needs.
+
+4. **Add Tags**:
+   - Optionally, add tags for better organization.
+
+
+5. **Configure Security Group**:
+   - Create a new security group or use an existing one.
+   - Allow inbound traffic on ports 80 (HTTP), 22 (SSH), and 443 (HTTPS) from your IP address.
+![Screenshot (57)](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/c2e660e8-e954-4dd4-88e7-b96749c55fc5)
+
+6. **Review and Launch**:
+   - Review the configuration and launch the instance.
+
+![created EC2 instance](https://github.com/highbee2810/STEGHUB-DevOps-cloud-Engineering/assets/155490206/f0c3258d-8ee6-42e3-adc5-aa9daaea10a4)
+    
+
