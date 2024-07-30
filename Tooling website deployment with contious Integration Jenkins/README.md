@@ -94,3 +94,54 @@ Save the configuration and let us try to run the build. For now we can only do i
 ![Screenshot (373)](https://github.com/user-attachments/assets/f335c02f-bbdf-4283-937d-61154c53de65)
 
 make some change in any file in your GitHub repository (e.g. README.MD file) and push the changes to the main branch.
+
+![Screenshot (374)](https://github.com/user-attachments/assets/d48edd3d-b010-4c39-ac1d-af2b5145990d)
+
+You will see that a new build has been launched automatically (by webhook) and you can see its results - artifacts, saved on Jenkins server
+![Screenshot (375)](https://github.com/user-attachments/assets/53a676d8-5d9f-42a8-a97f-7cdf5c09fa1f)
+
+we have now configured an automated Jenkins job that receives files from GitHub by webhook trigger (this method is considered as 'push' because the changes are being 'pushed' and files transfer is initiated by GitHub)
+By default, the artifacts are stored on Jenkins server locally
+```
+ls -lrt /var/lib/jenkins/jobs/tooling_github/builds/3/archive/
+```
+![Screenshot (376)](https://github.com/user-attachments/assets/2ec20ec2-7e01-4d1a-9584-12ba5858de60)
+
+## Step 3 - Configure Jenkins to copy files to NFS server via SSH
+Now we have our artifacts saved locally on Jenkins server, the next step is to copy them to our NFS server to /mnt/apps directory.
+1. Install "Publish Over SSH" plugin
+   On main dashboard select "Manage Jenkins" and choose "Manage Plugins" menu item. On "Available" tab search for "Publish Over SSH" plugin and install it
+![Screenshot (377)](https://github.com/user-attachments/assets/13b4366d-c372-4b47-84cc-148deab12b52)
+
+click install
+
+![Screenshot (378)](https://github.com/user-attachments/assets/5f5e08a5-20cd-4f5b-84e7-a3a821c4b775)
+
+## 2. Configure the job/project to copy artifacts over to NFS server
+
+On main dashboard select Manage Jenkins > Configure System menu item.
+
+Scroll down to Publish over SSH plugin configuration section and configure it to be able to connect to your NFS server:
+
+Provide a private key (content of .pem file that we use to connect to NFS server via SSH/Putty)
+
+Arbitrary name
+
+Hostname - can be private IP address of our NFS server
+
+Username - ec2-user (since NFS server is based on EC2 with RHEL 9)
+
+Remote directory - /mnt/apps since our Web Servers use it as a mointing point to retrieve files from the NFS server
+
+![Screenshot (380)](https://github.com/user-attachments/assets/bd29d180-ffe8-4235-bb0e-5eddc17c9d9b)
+
+Test to confirm if the configuration is okay
+![Screenshot (381)](https://github.com/user-attachments/assets/47f64b1c-dc50-4971-af05-afec18107dea)
+
+Save the configuration, open your Jenkins job/project configuration page and add another one Post-build Action (Send build artifact over ssh).
+Also, Configure it to send all files produced by the build into our previouslys define remote directory In our case we want to copy all files and directories, so we use ** If you want to apply some particular pattern to define which files to send 
+
+![Screenshot (382)](https://github.com/user-attachments/assets/61901e8b-8c76-47cc-889b-db4366661051)
+
+Save this configuration and go ahead, change something in README.MD file in our GitHub Tooling repository
+
