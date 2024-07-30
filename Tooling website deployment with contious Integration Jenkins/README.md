@@ -41,5 +41,41 @@ Here is how your updated architecture will look upon competion of this project
    sudo apt update
    sudo apt install default-jdk-headless
    ```
+![Screenshot (363)](https://github.com/user-attachments/assets/85d721bb-867c-4b31-8200-f20189fda46a)
+![Screenshot (362)](https://github.com/user-attachments/assets/4a50e2d6-204d-4c94-b0be-f16724665eb0)
+
+3.**Install Jenkins**
+```
+#add the Jenkins Debian repository key to your system
+wget -q -O - https://pkg.jenkins.io/debian-stable/jenkins.io.key | sudo apt-key add -
+
+#Add the Jenkins repository to your sources list
+sudo sh -c 'echo deb https://pkg.jenkins.io/debian-stable binary/ > /etc/apt/sources.list.d/jenkins.list'
+#Update your package lists
+sudo apt update
+
+#install jenkins
+sudo apt-get install jenkins
+```
+![Screenshot (364)](https://github.com/user-attachments/assets/5da13bff-26a4-4d93-8b93-f30dba078f80)
+
+**Make sure Jenkins is up and running**
+```
+sudo systemctl status jenkins
+```
+![Screenshot (365)](https://github.com/user-attachments/assets/ca0b5215-3bee-4e01-970f-9609052432d9)
+
+4. By default Jenkins server uses TCP port 8080 - open it by creating a new Inbound Rule in your EC2 Security Group
+![Screenshot (367)](https://github.com/user-attachments/assets/be0b39e2-a216-43f0-b8df-bf183757933f)
+
+5. Perform initial Jenkins setup
+   From your browser access http://54.185.44.240:8080
+![Screenshot (368)](https://github.com/user-attachments/assets/95683310-471a-4b25-9ac6-b02fb8712143)
 
 
+```
+sudo cat /var/lib/jenkins/secrets/initialAdminPassword
+```
+Retrieve paasword from your server.
+
+**Install suggested pluggins**
