@@ -83,4 +83,14 @@ Retrieve paasword from your server.
 
 6. Go to Jenkins web console, click "New Item" and create a "Freestyle project"
    ![Screenshot (371)](https://github.com/user-attachments/assets/eb94a690-69ac-47a9-9599-cdf3b5888850)
+To connect your GitHub repository, you will need to provide its URL, you can copy from the repository itself, In configuration of your Jenkins freestyle project choose Git repository,
+provide there the link to your Tooling GitHub repository and credentials (user/password) so Jenkins could access files in the repository.
 
+Save the configuration and let us try to run the build. For now we can only do it manually. Click "Build Now" button, if you have configured everything correctly, the build will be successfull and you will see it under #1
+![Screenshot (372)](https://github.com/user-attachments/assets/222db175-8c80-4c21-97cf-de7868d0455c)
+
+3. Click "Configure" your job/project and add these two configurations Configure triggering the job from GitHub webhook Configure "Post-build Actions" to archive all the files - files resulted from a build are called "artifacts"
+
+![Screenshot (373)](https://github.com/user-attachments/assets/f335c02f-bbdf-4283-937d-61154c53de65)
+
+make some change in any file in your GitHub repository (e.g. README.MD file) and push the changes to the main branch.
