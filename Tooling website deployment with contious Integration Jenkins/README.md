@@ -141,7 +141,28 @@ Test to confirm if the configuration is okay
 Save the configuration, open your Jenkins job/project configuration page and add another one Post-build Action (Send build artifact over ssh).
 Also, Configure it to send all files produced by the build into our previouslys define remote directory In our case we want to copy all files and directories, so we use ** If you want to apply some particular pattern to define which files to send 
 
-![Screenshot (382)](https://github.com/user-attachments/assets/61901e8b-8c76-47cc-889b-db4366661051)
+![Screenshot (383)](https://github.com/user-attachments/assets/905d2f37-075f-45d3-b40d-888e55ba9ccc)
 
-Save this configuration and go ahead, change something in README.MD file in our GitHub Tooling repository
+a new line have been added to the README.md file
+![Screenshot (384)](https://github.com/user-attachments/assets/b14c4d7b-cda5-47f0-81dd-2a1a8cc3c629)
+
+the error in the build indicates that there is need for permission to be set for user ec2-user on the NFS server : Ensure the target directory (/mnt) and it's contents on the NFS server has the correct permissions. We might need to change ownership or modify the permissions to allow the Jenkins user to write to it.
+```
+sudo chown -R ec2-user:ec2-user /mnt/apps
+sudo chmod -R 777 /mnt/apps
+```
+![Screenshot (385)](https://github.com/user-attachments/assets/3ffb571e-8da9-47fb-b360-d7dbe0d7d3a9)
+
+**Run the build again from jenkins GUI**
+
+![Screenshot (386)](https://github.com/user-attachments/assets/03ee6c3c-424e-4e6d-be13-1245572e259e)
+
+now the build is successful
+check the file on NFS_server /mnt/apps directory to confirm that the files was successfully transferred.
+![Screenshot (387)](https://github.com/user-attachments/assets/7fc796cd-e9e8-4ed6-915f-148f55bdbe9a)
+
+**since the file was updated we have just implemented our first Continous Integration solution using Jenkins CI.**
+
+
+
 
