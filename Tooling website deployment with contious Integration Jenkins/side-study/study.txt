@@ -1,0 +1,62 @@
+What is continuous integration?
+Continuous integration (CI) is a software development strategy that increases the speed of development while ensuring the quality of the code that teams deploy. Developers continually commit changes in small increments (at least daily, or even several times a day), and each change is automatically built and tested by the CI server before it is merged into the product. If any issues are discovered during the test phase, the CI platform blocks the code from merging and alerts the team so they can quickly fix any errors.
+
+Continuous integration works hand-in-hand with Agile methodologies. Agile emphasizes flexibility, collaboration, and responsiveness to customer needs. By integrating code changes frequently and automatically, CI enables teams to respond swiftly to evolving requirements, catch issues early, and maintain high standards of quality.
+
+Together, CI and Agile foster an environment of continuous improvement, where software is not just developed faster but also becomes more adaptable and customer-centric with each iteration.
+
+What are the benefits of continuous integration?
+The fundamental tenet of continuous integration is quite simple: commit and integrate your code often—daily at a minimum. Such a small change in your software development process can yield big results.
+
+With continuous integration, you can achieve a number of benefits:
+
+Improved team productivity and efficiency
+Accelerated speed to market
+Better product/market fit
+Higher quality, more stable products
+Increased customer satisfaction
+Happier, more productive developers
+How do these benefits accrue from such a simple change in your workflow?
+When you commit more often, you can identify and resolve merge conflicts earlier, or avoid them altogether. So, instead of writing a thousand lines of code and finding an error, you’ve only written a hundred. Finding the bugs in your code becomes an errand of a few minutes instead of a few hours. This leads to improved team productivity and helps developers ship working code more quickly.
+
+Shipping new features quickly means increasing your speed to market. This gives your team a competitive edge in two key ways:
+
+Your customers get access to new features faster, leading to higher customer satisfaction (and new information you can use to further improve your products).
+
+Your company gets a faster return on investment from new features. Rather than waiting for the next milestone to release code, you can deliver value as soon as a new feature is ready for the market.
+
+How does continuous integration work?
+At its core, CI is a systematic approach that ensures seamless code integration, rigorous testing, and automated build processes. Here’s a closer look at how continuous integration works:
+
+Code integration	Developers continuously push their code changes to a shared repository, often multiple times a day. This practice ensures that new code is consistently integrated with the existing codebase.
+Feedback loop	CI provides rapid feedback to developers regarding the success or failure of their code changes. This immediate feedback loop encourages a culture of accountability and quality.
+Automated testing	After each code integration, the CI server runs automated tests to assess the changes’ impact on the application’s functionality, security, and adherence to your organization’s policies. Common tests include unit tests, integration tests, security and compliance scans, and code quality checks.
+Deployment pipelines	CI can be seamlessly integrated with continuous delivery (CD), creating a deployment pipeline. This pipeline automates the process of deploying the application to various environments, from development to production.
+Early issue detection	CI detects issues and bugs early in the development cycle, allowing developers to address them promptly. This prevents the accumulation of critical errors and streamlines the debugging process.
+Collaboration	CI promotes collaboration within development teams by creating transparency and accountability. It encourages developers to work together to maintain code quality and reliability.
+Continuous builds	CI systems automatically build the application whenever code changes are detected. This ensures that the application remains in a deployable state at all times, reducing deployment risks.
+Version control	CI relies on version control systems like Git to manage code changes and track revisions. This ensures that code changes are well-documented and traceable.
+Continuous integration is the practice of integrating code changes frequently, automatically testing them, and ensuring that the application remains stable and reliable throughout the development process. This approach significantly accelerates development cycles, minimizes risks, and enhances code quality, ultimately leading to a more efficient and successful software development process.
+
+What are best practices for continuous integration?
+Developers who practice continuous integration commit early and often. This allows them to detect and troubleshoot conflicts before deploying code to production. Small, frequent commits are necessary, but there are many other continuous integration best practices that can help ensure a smooth and effective implementation of this critical software development methodology.
+
+To use continuous integration successfully, follow these guidelines:
+Make testing integral to the development process: Fostering a rigorous testing culture is the most important element that a company needs for successful continuous integration. In order to confidently integrate new code into the mainline, the team needs the confidence that the code is sound. Engineers should write tests as each feature is being developed.
+
+Ensure that the testing environment mirrors production: To support your rigorous testing culture, it’s important that the testing environment is an exact replica of the production environment. Otherwise, you have no guarantee that what you’re testing will work in production. This means the testing environment should use the same version of the database, web server configuration, artifacts, etc. Containerization with Docker or similar tools can help with this.
+
+Set up effective monitoring and alerts: Robust monitoring and alerts are essential for delivering software to users with confidence and consistency. An effective CI pipeline will give developers real-time visibility into the health of their application code, enabling teams to detect issues, understand their root causes, and take corrective action. It will also provide effectives alerts, notifying teams of deviations from expected behavior in places where they are most likely to see it, such as Slack, JIRA, or email.
+
+Automate the deploy workflow: Finally, to ensure that the entire software development pipeline is fast and efficient, the deploy workflow should also be automated. By automating deployments, the team gets their finished code to production faster, and without the risk of manual deployment errors. Because, after all, what’s the point of developing software quickly if it’s not getting to the customer?
+
+What is the difference between CI and CD?
+Continuous integration (CI) sets the foundation for modern software development, ensuring that your codebase remains stable and reliable as you make changes. But why stop there when you can unlock the true potential of your development process with continuous integration and continuous delivery or continuous deployment (CI/CD)?
+
+Continuous integration is the automated building and testing of your application on every new commit.
+
+Continuous delivery is a state where your application is always ready to be deployed. A manual step is required to actually deploy the application.
+
+Continuous deployment is the complete automation of every stage in the delivery process: building, testing, and deploying. If all tests pass, every new commit deploy to production with no manual intervention.
+
+CI/CD automates and streamlines every aspect of your development workflow, from code changes to production deployment. Learn more about how a complete CI/CD pipeline can elevate your deployment practices in our complete guide to CI/CD.
