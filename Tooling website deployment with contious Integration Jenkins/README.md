@@ -78,4 +78,9 @@ sudo cat /var/lib/jenkins/secrets/initialAdminPassword
 ```
 Retrieve paasword from your server.
 
-**Install suggested pluggins**
+**Install suggested pluggins  and set up an account**
+![Screenshot (370)](https://github.com/user-attachments/assets/68dbbdee-24f3-4d84-bc18-fad866316747)
+
+6. Go to Jenkins web console, click "New Item" and create a "Freestyle project"
+   ![Screenshot (371)](https://github.com/user-attachments/assets/eb94a690-69ac-47a9-9599-cdf3b5888850)
+
