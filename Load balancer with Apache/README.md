@@ -5,10 +5,10 @@
 3. an ubuntu server(the load balancer server)
 4. Db server.
 ## This project is the continuation of the devops tooling website solution where we have our web servers up and running , the NFS server and the DB server.
-**In our set up in Project-7 we had 3 Web Servers and each of them had its own public IP address and public DNS name. A client has to access them by
+In our set up in Project-7 we had 3 Web Servers and each of them had its own public IP address and public DNS name. A client has to access them by
 using different URLs, which is not a nice user experience to remember addresses/names of even 3 server, let alone millions of Google servers.
 In order to hide all this complexity and to have a single point of access with a single public IP address/name, a Load Balancer can be used. A Load
-Balancer (LB) distributes clients' requests among underlying Web Servers and makes sure that the load is distributed in an optimal way.**
+Balancer (LB) distributes clients' requests among underlying Web Servers and makes sure that the load is distributed in an optimal way.
 
 ![Screenshot (339)](https://github.com/user-attachments/assets/47aba1b4-963f-439c-8f23-c6fec9634eca)
 
