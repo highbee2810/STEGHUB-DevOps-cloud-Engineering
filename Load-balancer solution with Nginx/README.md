@@ -115,4 +115,32 @@ Request your certificate (just follow the certbot instructions - you will need t
 sudo ln -s /snap/bin/certbot /usr/bin/certbot
 sudo certbot --nginx
 ```
+![Screenshot (406)](https://github.com/user-attachments/assets/d6058c9e-dac9-4771-adb0-01254108fdc4)
+
+Test secured access to your Web Solution by trying to reach **https://tooling.moo.com**
+![Screenshot (407)](https://github.com/user-attachments/assets/4bd18756-50ad-44ce-b4a3-16283605181d)
+
+**6. Set up periodical renewal of your SSL/TLS certificate**
+By default, LetsEncrypt certificate is valid for 90 days, so it is recommended to renew it at least every 60 days or more frequently
+![Screenshot (408)](https://github.com/user-attachments/assets/bf7c5be2-c61b-42ea-b299-c2c74f8f1fc8)
+
+You can test renewal command in dry-run mode
+```
+sudo certbot renew --dry-run
+```
+![Screenshot (409)](https://github.com/user-attachments/assets/34c3b2a6-51e8-45d3-b9cd-b1d76b0a7c74)
+
+Best pracice is to have a scheduled job that to run renew command periodically. Let us configure a cronjob to run the command twice a day. To do so, lets edit the crontab file with the following command:
+```
+crontab -e
+```
+
+Add following line:
+```
+* */12 * * * root /usr/bin/certbot renew > /dev/null 2>&1
+```
+![Screenshot (410)](https://github.com/user-attachments/assets/4c85c281-af2e-4c39-bfd9-fb9323fe00d2)
+
+You can always change the interval of this cronjob if twice a day is too often by adjusting schedule expression.
+
 
