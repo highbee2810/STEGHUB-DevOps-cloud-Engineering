@@ -59,6 +59,37 @@ Configure a Post-build job to save all (**) files
      ```
 ## Step 3 - Begin Ansible Development.
 1. In your ansible-config-mgt GitHub repository, create a new branch that will be used for development of a new feature.
-   
+   ![Screenshot (427)](https://github.com/user-attachments/assets/06f8005c-5abc-4829-b7a5-79cad9a02e83)
+2. Checkout the newly created feature branch to your local machine and start building your code and directory structure
+run the command below on vscode terminal
+```
+git branch -m feature/ans-prj01
+```
+![Screenshot (428)](https://github.com/user-attachments/assets/7aa55d4f-543c-466a-9513-cb6a9ee20219)
+run git branch to confirm the branch you are using
+![Screenshot (429)](https://github.com/user-attachments/assets/a73a026f-1b9a-47ea-8c1a-d2059bd465e0)
 
-   
+3. Create a directory and name it playbooks - it will be used to store all your playbook files
+   ```
+   mkdir playbooks
+   ```
+4. Create a directory and name it inventory - it will be used to keep your hosts organised.
+```
+mkdir inventory
+```
+5. Within the playbooks folder, create your first playbook, and name it common.yml
+```
+cd playbooks
+touch common.yml
+```
+6. Within the inventory folder, create an inventory file () for each environment (Development, Staging Testing and Production) dev, staging, uat, and prod respectively. These inventory files use .ini languages style to
+configure Ansible hosts
+```
+cd /ivnventory
+touch dev staging uat prod
+```
+## Step-4 Setup an Ansible inventory 
+An Ansible inventory file defines the hosts and groups of hosts upon which commands, modules, and tasks in a playbook operate
+
+Save the below inventory structure in the inventory/dev file to start configuring your development servers.
+Note: Ansible uses TCP port 22 by default, which means it needs to ssh into target servers from Jenkins-Ansible host
