@@ -29,4 +29,6 @@ ansible --version
 ```
 ![Screenshot (416)](https://github.com/user-attachments/assets/685f257c-b29d-43e4-ad5d-684cb9a36f3c)
 
+4. Configure Jenkins build job to archive your repository content every time you change it.
 
+setup a webhook on ansible-mgt repository on git hub
