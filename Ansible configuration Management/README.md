@@ -31,4 +31,15 @@ ansible --version
 
 4. Configure Jenkins build job to archive your repository content every time you change it.
 
-setup a webhook on ansible-mgt repository on git hub
+setup a webhook on ansibleconfig-mgt repository on github
+
+![Screenshot (420)](https://github.com/user-attachments/assets/1cf1e31c-e7cb-4ce7-8fe4-eeb3dd19b045)
+
+Create a new Freestyle project ansible in Jenkins and point it to your 'ansible-config-mgt' repository
+![Screenshot (421)](https://github.com/user-attachments/assets/0a2d792b-12be-4610-ae9d-1bc0da139125)
+
+Configure a Post-build job to save all (**) files
+![Screenshot (422)](https://github.com/user-attachments/assets/072da84c-89da-495a-af51-996180a1d91b)
+
+5. Test your setup by making some change in README.md file in main branch.
+   
