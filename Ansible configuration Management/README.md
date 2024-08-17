@@ -41,5 +41,24 @@ Create a new Freestyle project ansible in Jenkins and point it to your 'ansible-
 Configure a Post-build job to save all (**) files
 ![Screenshot (422)](https://github.com/user-attachments/assets/072da84c-89da-495a-af51-996180a1d91b)
 
-5. Test your setup by making some change in README.md file in main branch.
+5. Test your setup by making some change in README.md file in main branch.The file is saved alraedy in  /var/lib/jenkins/jobs/ansible/builds/2/archive/
+   ```
+   ls /var/lib/jenkins/jobs/ansible/builds/2/archive/
+   ```
+   Note: Trigger Jenkins project execution only for main (or master) branch.
+## Step 2 - Prepare your development environment using Visual Studio Code
+1. Install and launch visual studio code
+   ![Screenshot (425)](https://github.com/user-attachments/assets/15ec10dc-c194-4129-af7a-fe537acebe9e)
+
+2. After you have successfully installed VSC, configure it to connect to your newly created GitHub repository.
+   - install git pull request extension
+   - create a new folder nam ansibleconfig-mgt open it with visual studio code
+   - clone the repository from github into the folder using
+   - ```
+     git clone https://github.com/highbee2810/ansibleconfig-mgt..git
+     ```
+## Step 3 - Begin Ansible Development.
+1. In your ansible-config-mgt GitHub repository, create a new branch that will be used for development of a new feature.
+   
+
    
