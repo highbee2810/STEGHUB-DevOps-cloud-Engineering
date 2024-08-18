@@ -93,3 +93,89 @@ An Ansible inventory file defines the hosts and groups of hosts upon which comma
 
 Save the below inventory structure in the inventory/dev file to start configuring your development servers.
 Note: Ansible uses TCP port 22 by default, which means it needs to ssh into target servers from Jenkins-Ansible host
+```
+ssh-add devops.pem
+```
+![Screenshot (431)](https://github.com/user-attachments/assets/f0c9ea56-de6e-4d10-8310-087e8dbb70b2)
+
+Confirm the key has been added with the command below, you should see the name of your key.
+```
+ssh-add -l
+```
+![Screenshot (432)](https://github.com/user-attachments/assets/f9b70470-06c4-48be-b86d-8199e2f72c17)
+
+Now, ssh into your Jenkins-Ansible server using ssh-agent
+```
+ssh -A ubuntu@54.202.149.118
+```
+![Screenshot (433)](https://github.com/user-attachments/assets/de92306a-27f2-4b3f-b4d0-ca321ae1b805)
+
+Update your inventory/dev.yml file with this snippet of code:
+```
+[nfs]
+172.31.28.107 ansible_ssh_user=ec2-user
+[webservers]
+172.31.28.103 ansible_ssh_user=ec2-user
+172.31.30.125 ansible_ssh_user=ec2-user
+[db]
+172.31.24.101 ansible_ssh_user=ubuntu
+[lb]
+172.31.26.59 ansible_ssh_user=ubuntu
+```
+![Screenshot (434)](https://github.com/user-attachments/assets/e63673c0-d8bc-4b4b-b442-68bd1ec72fe5)
+## Step 5 - Create a Common Playbook
+It is time to start giving Ansible the instructions on what you need to be performed on all servers listed in inventory/dev
+In common.yml playbook you will write configuration for repeatable, re-usable, and multi-machine tasks that is common to systems within the infrastructure.
+Update playbooks/common.yml file with following code:
+```
+---
+- name: Update web, NFS, and DB servers
+  hosts: webservers, nfs, db
+  become: yes
+  tasks:
+    - name: Ensure Wireshark is at the latest version
+      yum:
+        name: wireshark
+        state: latest
+
+- name: Update LB server
+  hosts: lb
+  become: yes
+  tasks:
+    - name: Update apt repository cache
+      apt:
+        update_cache: yes
+      
+    - name: Ensure Wireshark is at the latest version
+      apt:
+        name: wireshark
+        state: latest
+```
+![Screenshot (435)](https://github.com/user-attachments/assets/2a2c3a89-ce63-405c-844d-314dcc79b6bb)
+
+The Ansible playbook  updates Wireshark on web, NFS, and DB servers using yum, and on the LB server using apt
+lets update this playbook with following tasks:
+Create a directory and a file inside it
+Change timezone on all servers
+Run some shell script
+
+## Step 6 - Update GIT with the latest code
+Now all of your directories and files live on your machine and you need to push changes made locally to GitHub.
+In many organisations there is a development rule that do not allow to deploy any code before it has been reviewed by an extra pair of eyes - it is also called "Four eyes principle".
+Now you have a separate branch, you will need to know how to raise a Pull Request (PR), get your branch peer reviewed and merged to the master branch.
+Commit your code into GitHub:
+1. Use git commands to add, commit and push your branch to GitHub.
+   ```
+   git add .
+   git status
+   git commit -m"ansible playbook"
+
+   ```
+   push to remote repository branch
+   ```
+   git push origin featur/ans-prj01
+   ```
+   
+2. Create a Pull Request (PR)
+
+
