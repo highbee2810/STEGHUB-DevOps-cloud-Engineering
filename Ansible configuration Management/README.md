@@ -177,5 +177,27 @@ Commit your code into GitHub:
    ```
    
 2. Create a Pull Request (PR)
+click on compare and pull request.
+![Screenshot (436)](https://github.com/user-attachments/assets/89963f9b-6742-4815-8c24-3becf7aa9374)
+3. lets act as a reviewer.
+![Screenshot (437)](https://github.com/user-attachments/assets/30559653-9e73-431c-a026-22b7517e1619)
 
+add a comment
+![Screenshot (439)](https://github.com/user-attachments/assets/cb6b982d-e4d8-47fc-957b-393feaf973f4)
 
+and merge the pull request
+![Screenshot (440)](https://github.com/user-attachments/assets/9dd26cb4-f2bc-44a2-b483-84ddfaafbff7)
+5. Head back on your terminal, checkout from the feature branch into the master, and pull down the latest changes
+```
+git checkout -b main
+git pull
+```
+![Screenshot (441)](https://github.com/user-attachments/assets/98fdc23f-466c-4d55-8aee-98f8696d1f36)
+
+Once your code changes appear in master branch - Jenkins will do its job and save all the files (build artifacts) to /var/lib/jenkins/jobs/ansible/builds/<build_number>/archive/ directory
+on Jenkins-Ansible server
+## Step 7 - Run the first Ansible test.
+Now, it is time to execute ansible-playbook command and verify if our playbook actually works:
+1.Setup your VSCode to connect to your instance
+![Screenshot (442)](https://github.com/user-attachments/assets/d3046837-8d2f-4ac4-a397-012c2e15703d)
+2. 
