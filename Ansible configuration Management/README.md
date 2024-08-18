@@ -200,4 +200,7 @@ on Jenkins-Ansible server
 Now, it is time to execute ansible-playbook command and verify if our playbook actually works:
 1.Setup your VSCode to connect to your instance
 ![Screenshot (442)](https://github.com/user-attachments/assets/d3046837-8d2f-4ac4-a397-012c2e15703d)
-2. 
+2. run the code below in ansibleconfig-mgt. directory
+```
+ansible-playbook -i inventory/dev.yml playbooks/common.yml
+``` 
