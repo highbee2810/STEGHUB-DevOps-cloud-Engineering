@@ -203,4 +203,16 @@ Now, it is time to execute ansible-playbook command and verify if our playbook a
 2. run the code below in ansibleconfig-mgt. directory
 ```
 ansible-playbook -i inventory/dev.yml playbooks/common.yml
-``` 
+```
+![Screenshot (446)](https://github.com/user-attachments/assets/3d359d72-6da4-455c-b595-7b80da99c06a)
+
+ssh to one the servers to check if wireshark is installed.
+
+![Screenshot (444)](https://github.com/user-attachments/assets/03007dce-15aa-42a9-8b60-f0399f5fd4b6)
+
+![Screenshot (443)](https://github.com/user-attachments/assets/33b03605-5540-4160-8bf0-867ddcbbfbc0)
+
+## The new architecture
+
+![Screenshot (445)](https://github.com/user-attachments/assets/6d0c0964-5bdb-4038-adfd-710a610a80b5)
+
