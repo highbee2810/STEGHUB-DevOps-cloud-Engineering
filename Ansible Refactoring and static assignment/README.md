@@ -1,4 +1,4 @@
-# Ansible refactoring and static assignment
+![image](https://github.com/user-attachments/assets/5e53f97d-c357-442f-8f2b-8788b236b7ea)# Ansible refactoring and static assignment
 In this project, we will continue working with ansibleconfig-mgt. repository and make some improvements of our code.
 we need to refactor our Ansible code, create assignments, and learn how to use the imports functionality. Imports allow to effectively re-use previously created playbooks in a new playbook - it allows us to organize our tasks and
 reuse them when needed.
@@ -30,3 +30,85 @@ enhance it by introducing a new Jenkins project/job - we will require **Copy Art
 6. The main idea of save_artifacts project is to save artifacts into /home/ubuntu/ansible-config-artifact directory.
 7. Test your set up by making some change in README.MD file inside your ansible-config-mgt repository (right inside master branch).
    If both Jenkins jobs have completed one after another - you shall see your files inside /home/ubuntu/ansible-config-artifact directory and it will be updated with every commit to your master branch.
+## Step 2 - Refactor Ansible code by importing other playbooks into site.yml
+DevOps philosophy implies constant iterative improvement for better efficiency - refactoring is one of the techniques that can be used.
+create a new branch, name it refactor
+```
+git branch refactor
+git branch -l
+```
+![Screenshot (456)](https://github.com/user-attachments/assets/9e1b0d1a-c59f-421c-b2d3-12c709939431)
+In previous project, we wrote all tasks in a single playbook common.yml. it will become tedious to use one playbook for multiple servers.
+1. Within playbooks folder, create a new file and name it site.yml
+   ```
+   cd playbooks
+   touch site.yml
+   ls
+   ```
+   ![Screenshot (457)](https://github.com/user-attachments/assets/a49d488c-fee1-46da-9db1-9d6a82eab885)
+   This file will now be considered as an entry point into the entire infrastructure configuration. Other playbooks will be included here as a reference. In other words, site.yml will become a parent to all other playbooks that will be developed. Including common.yml that you created previously.
+   2. Create a new folder in root of the repository and name it staticassignments
+      ```
+      cd ..
+      mkdir staticassignments
+      ls
+      ```
+      ![Screenshot (458)](https://github.com/user-attachments/assets/a3da7f6a-abaa-42fd-99a3-7b986d15a003)
+The static-assignments folder is where all other children playbooks will be stored
+3. Move common.yml file into the newly created static-assignments folder.
+   ![Screenshot (459)](https://github.com/user-attachments/assets/858c7c7a-afb9-4fe0-ab05-8bdbda8d456a)
+4. Inside site.yml file, import common.yml playbook.
+   ```
+   ---
+- hosts: all
+- import_playbook: ../static-assignments/common.yml
+  ```
+![Screenshot (460)](https://github.com/user-attachments/assets/ddffe7cc-e5ab-475c-aa4b-c3478a0b5e6f)
+5. Run ansible-playbook command against the dev environment
+create another playbook under static-assignments and name it common-del.yml. In this playbook, configure deletion of wireshark utility.
+```
+touch common-del.yml
+vi common-del.yml
+```
+paste the following code in it
+```
+---
+- name: Update web, NFS, and DB servers
+  hosts: webservers, nfs, db
+  remote_user: ec2-user
+  become: yes
+  become_user: root
+  tasks:
+    - name: Delete Wireshark
+      yum:
+        name: wireshark
+        state: removed
+
+- name: Update LB server
+  hosts: lb
+  remote_user: ubuntu
+  become: yes
+  become_user: root
+  tasks:
+    - name: Delete Wireshark
+      apt:
+        name: wireshark-qt
+        state: absent
+        autoremove: yes
+        purge: yes
+        autoclean: yes
+
+```
+![Screenshot (461)](https://github.com/user-attachments/assets/ee5661c8-9f6e-49d5-ae8f-515e5a6de6d4)
+update site.yml with - import_playbook: ../static-assignments/common-del.yml instead of common.yml and run it against dev servers
+```
+cd /home/ubuntu/ansible-config-mgt/
+ansible-playbook -i inventory/dev.yml playbooks/site.yaml
+```
+
+
+
+
+
+
+
