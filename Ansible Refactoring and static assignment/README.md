@@ -105,10 +105,44 @@ update site.yml with - import_playbook: ../static-assignments/common-del.yml ins
 cd /home/ubuntu/ansible-config-mgt/
 ansible-playbook -i inventory/dev.yml playbooks/site.yaml
 ```
+![Screenshot (462)](https://github.com/user-attachments/assets/efdf96e8-e0dc-4f21-8e1c-9b30ebfa0fa0)
+
+wireshark has been deleted in all of the servers
+
+![Screenshot (463)](https://github.com/user-attachments/assets/5e4ec4e6-b543-48e8-871a-18614825d007)
+
+## Step 3 - Configure UAT Webservers with a role 'Webserver'
+We have our nice and clean dev environment, so let us put it aside and configure 2 new Web Servers as uat. 
+1. Launch 2 fresh EC2 instances using RHEL 8 image, we will use them as our uat servers, so give them names accordingly - Web1-UAT and Web2-UAT
+   ![Screenshot (464)](https://github.com/user-attachments/assets/ab998bd2-054c-4c12-8708-9df79e9a52cb)
+2. To create a role, we must create a directory called roles/, relative to the playbook file or in /etc/ansible/ directory.
+There are two ways how you can create this folder structure:
+ - Use an Ansible utility called ansible-galaxy inside ansible-configmgt/roles directory (you need to create roles directory upfront)
+```
+mkdir roles
+cd roles
+ansible-galaxy init webserver
+```
+
+ - Create the directory/files structure manually
+   since we store all our codes in GitHub, it is recommended to create folders and files there rather than locally on Jenkins-Ansible server
+   
+   ![Screenshot (465)](https://github.com/user-attachments/assets/b3f105e3-8d37-419f-bc27-1f3cbbdba9d9)
+
+   remove tests,files and vars directories
+   ![Screenshot (466)](https://github.com/user-attachments/assets/a961f2a6-8992-4daf-aecc-54e7cb72a2cd)
+3. Update your inventory ansible-config-mgt/inventory/uat.yml file with IP
+addresses of your 2 UAT Web servers
+```
+[uat-webservers]
+<Web1-UAT-Server-Private-IP-Address> ansible_ssh_user='ec2-user'
+<Web2-UAT-Server-Private-IP-Address> ansible_ssh_user='ec2-user'
+```
+4. In /etc/ansible/ansible.cfg file uncomment roles_path string and provide a full path to your roles directory roles_path = /home/ubuntu/ansible-configmgt/roles, so Ansible could know where to find configured roles.
 
 
 
-
-
+## Step 4 - Reference 'Webserver' role
+Within the static-assignments folder, create a new assignment for uatwebservers uat-webservers.yml. This is where we will reference the role.
 
 
