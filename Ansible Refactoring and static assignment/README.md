@@ -140,9 +140,69 @@ addresses of your 2 UAT Web servers
 ```
 4. In /etc/ansible/ansible.cfg file uncomment roles_path string and provide a full path to your roles directory roles_path = /home/ubuntu/ansible-configmgt/roles, so Ansible could know where to find configured roles.
 
+5. It is time to start adding some logic to the webserver role. Go into tasks directory, and within the main.yml file, start writing configuration tasks to do the following:
+ - Install and configure Apache (httpd service)
+ - Clone Tooling website from GitHub https://github.com/highbee2810/tooling.git.
+ - Ensure the tooling website code is deployed to /var/www/html on each of 2 UAT Web servers.
+ - Make sure httpd service is started
+   ```
+   ---
+---
+- name: Setup Apache and deploy a website
+  hosts: all
+  become: true
+  tasks:
+    - name: Install Apache
+      ansible.builtin.yum:
+        name: "httpd"
+        state: present
+
+    - name: Install Git
+      ansible.builtin.yum:
+        name: "git"
+        state: present
+
+    - name: Clone a repository
+      ansible.builtin.git:
+        repo: https://github.com/highbee2810/tooling.git
+        dest: /var/www/html
+        force: yes
+
+    - name: Copy HTML content to one level up
+      command: cp -r /var/www/html/html/ /var/www/
+
+    - name: Start Apache service
+      ansible.builtin.service:
+        name: httpd
+        state: started
+
+```
+![Screenshot (467)](https://github.com/user-attachments/assets/2f2be267-8416-4c9b-8e89-5aab23eef436)
 
 
 ## Step 4 - Reference 'Webserver' role
 Within the static-assignments folder, create a new assignment for uatwebservers uat-webservers.yml. This is where we will reference the role.
+```
+---
+- hosts: uat-webservers
+roles:
+- webserver
+ ```
+the entry point to our ansible configuration is the site.yml file. Therefore, we need to refer your uat-webservers.yml role inside site.yml
+So, we should have this in site.yml
+```
+---
+- hosts: all
+- import_playbook: ../static-assignments/common.yml
+- hosts: uat-webservers
+- import_playbook: ../static-assignments/uat-webservers.yml
+  ```
+## Step 5 - Commit & Test
+Commit your changes, create a Pull Request and merge them to master branch, make sure webhook triggered two consequent Jenkins jobs, they ran successfully and copied all the files to your JenkinsAnsible server into /home/ubuntu/ansible-config-mgt/ directory
 
-
+Now run the playbook against your uat inventory and see what happens:
+**NOTE**: Before running your playbook, ensure you have tunneled into your Jenkins-Ansible server via ssh-agent
+```
+cd /home/ubuntu/ansible-config-mgt
+ansible-playbook -i /inventory/uat.yml playbooks/site.yaml
+```
