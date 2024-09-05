@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/5e53f97d-c357-442f-8f2b-8788b236b7ea)# Ansible refactoring and static assignment
+![Screenshot (470)](https://github.com/user-attachments/assets/c48a9a86-d96e-4e0a-9c5a-f3dec6cd407f)![image](https://github.com/user-attachments/assets/5e53f97d-c357-442f-8f2b-8788b236b7ea)# Ansible refactoring and static assignment
 In this project, we will continue working with ansibleconfig-mgt. repository and make some improvements of our code.
 we need to refactor our Ansible code, create assignments, and learn how to use the imports functionality. Imports allow to effectively re-use previously created playbooks in a new playbook - it allows us to organize our tasks and
 reuse them when needed.
@@ -206,3 +206,14 @@ Now run the playbook against your uat inventory and see what happens:
 cd /home/ubuntu/ansible-config-mgt
 ansible-playbook -i /inventory/uat.yml playbooks/site.yaml
 ```
+![Screenshot (469)](https://github.com/user-attachments/assets/1e4c7b7e-99a9-42f2-b6fd-7f3c76106571)
+You should be able to see both of your UAT Web servers configured and you can try to reach them from your browser
+
+```
+http://35.95.16.167/index.php
+```
+![Screenshot (472)](https://github.com/user-attachments/assets/db20ad1c-21f2-4aeb-b32d-7160e05778f2)
+
+
+Our Ansible architecture now looks like this:
+![Screenshot (471)](https://github.com/user-attachments/assets/46156e87-2fd6-44b2-ac06-7dc0a0ab12b8)
