@@ -145,8 +145,7 @@ addresses of your 2 UAT Web servers
  - Clone Tooling website from GitHub https://github.com/highbee2810/tooling.git.
  - Ensure the tooling website code is deployed to /var/www/html on each of 2 UAT Web servers.
  - Make sure httpd service is started
-   ```
-   ---
+``` 
 ---
 - name: Setup Apache and deploy a website
   hosts: all
@@ -187,16 +186,19 @@ Within the static-assignments folder, create a new assignment for uatwebservers 
 - hosts: uat-webservers
 roles:
 - webserver
- ```
+```
+
 the entry point to our ansible configuration is the site.yml file. Therefore, we need to refer your uat-webservers.yml role inside site.yml
 So, we should have this in site.yml
+
 ```
 ---
-- hosts: all
-- import_playbook: ../static-assignments/common.yml
-- hosts: uat-webservers
-- import_playbook: ../static-assignments/uat-webservers.yml
-  ```
+  hosts: all
+ import_playbook: ../static-assignments/common.yml
+   hosts: uat-webservers
+  import_playbook: ../static-assignments/uat-webservers.yml
+```
+ 
 ## Step 5 - Commit & Test
 Commit your changes, create a Pull Request and merge them to master branch, make sure webhook triggered two consequent Jenkins jobs, they ran successfully and copied all the files to your JenkinsAnsible server into /home/ubuntu/ansible-config-mgt/ directory
 
