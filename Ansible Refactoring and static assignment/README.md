@@ -1,4 +1,4 @@
-![Screenshot (470)](https://github.com/user-attachments/assets/c48a9a86-d96e-4e0a-9c5a-f3dec6cd407f)![image](https://github.com/user-attachments/assets/5e53f97d-c357-442f-8f2b-8788b236b7ea)# Ansible refactoring and static assignment
+# Ansible refactoring and static assignment
 In this project, we will continue working with ansibleconfig-mgt. repository and make some improvements of our code.
 we need to refactor our Ansible code, create assignments, and learn how to use the imports functionality. Imports allow to effectively re-use previously created playbooks in a new playbook - it allows us to organize our tasks and
 reuse them when needed.
