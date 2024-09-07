@@ -43,7 +43,7 @@ tags:
 - always
 ```
 ![Screenshot (477)](https://github.com/user-attachments/assets/b80a39ee-f6c2-42d9-abfa-043096b5dcbe)
-## Notice 3 things to notice here:
+## 3 things to notice here:
 1. We used include_vars syntax instead of include, this is because Ansible developers decided to separate different features of the module. From Ansible version 2.8, the include module is deprecated and
 variants of include_* must be used. These are:
 include_role
@@ -110,6 +110,19 @@ roles:
 - { role: nginx, when: enable_nginx_lb and load_balancer_is_required }
 - { role: apache, when: enable_apache_lb and
 load_balancer_is_required }
-
-
+```
+site.yml file
+```
+- name: Loadbalancers assignment
+hosts: lb
+- import_playbook: ../static-assignments/loadbalancers.yml
+when: load_balancer_is_required
+```
+Now we can make use of env-vars\uat.yml file to define which loadbalancer to use in UAT environment by setting respective environmental variable to true
+```
+enable_nginx_lb: true
+load_balancer_is_required: true
+```
+The same must work with apache LB, so you can switch it by setting respective environmental variable to true and other to false. To test this, you can update inventory for each environment and run Ansible
+against each environment
 
