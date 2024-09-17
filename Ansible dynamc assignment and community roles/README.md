@@ -130,4 +130,5 @@ Now test this, run the playbook against your uat inventory
 ```
 ansible-playbook -i inventory/uat playbooks/site.yml
 ```
+![Screenshot (59)](https://github.com/user-attachments/assets/d4b54219-6aac-4569-b89d-6259041ebf09)
 
