@@ -126,3 +126,8 @@ load_balancer_is_required: true
 The same must work with apache LB, so you can switch it by setting respective environmental variable to true and other to false. To test this, you can update inventory for each environment and run Ansible
 against each environment
 
+Now test this, run the playbook against your uat inventory
+```
+ansible-playbook -i inventory/uat playbooks/site.yml
+```
+
