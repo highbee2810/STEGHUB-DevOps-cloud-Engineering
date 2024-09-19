@@ -57,7 +57,79 @@ To get started, we will focus on these environments initially.
  - Pentest
 Both SIT - For System Integration Testing and UAT - User Acceptance Testing do not require a lot of extra installation or configuration. They are basically the webservers holding our applications. But Pentest - For Penetration testing is where we will conduct security related tests, so some other tools and specific configurations will be needed. In some cases, it will also be used for Performance and Load testing. Otherwise, that can also be a separate environment on its own. It all depends on decisions made by the company and the team running the show.
 
-What we want to achieve, is having Nginx to serve as a reverse proxy for our sites and tools. Each environment setup is represented in the below table and diagrams:
+![Screenshot (69)](https://github.com/user-attachments/assets/92c0139a-0d4a-4f66-8c9c-7ff9b4484fc1)
 
+What we want to achieve, is having Nginx to serve as a reverse proxy for our sites and tools. Each environment setup is represented in the below table and diagrams:
 ## CI-Environment
+![Screenshot (65)](https://github.com/user-attachments/assets/3e42591f-f655-4272-8289-b1ed32ac0866)
+
+## Other environment from lower to higher.
+![Screenshot (66)](https://github.com/user-attachments/assets/52c7b576-0375-486e-87de-244291695472)
+
+## DNS requirements
+Make DNS entries to create a subdomain for each environment. Assuming your main domain is darey.io
+You should have a subdomains list like this:
+![Screenshot (68)](https://github.com/user-attachments/assets/f4d3b14c-0992-400d-a283-cf5eed57fc03)
+
+![Screenshot (74)](https://github.com/user-attachments/assets/30bac76c-5c9d-4304-9c48-b934bc1badc2)
+
+ci inventory
+```
+[jenkins]
+<Jenkins-Private-IP-Address>
+[nginx]
+<Nginx-Private-IP-Address>
+[sonarqube]
+<SonarQube-Private-IP-Address>
+[artifact_repository]
+<Artifact_repository-Private-IP-Address>
+```
+
+dev inventory
+```
+[tooling]
+<Tooling-Web-Server-Private-IP-Address>
+[todo]
+<Todo-Web-Server-Private-IP-Address>
+[nginx]
+<Nginx-Private-IP-Address>
+[db:vars]
+ansible_user=ec2-user
+ansible_python_interpreter=/usr/bin/python
+[db]
+<DB-Server-Private-IP-Address>
+```
+pentest inventory file
+```
+[pentest:children]
+pentest-todo
+pentest-tooling
+[pentest-todo]
+<Pentest-for-Todo-Private-IP-Address>
+[pentest-tooling]
+<Pentest-for-Tooling-Private-IP-Address>
+```
+**Observations**
+1. You will notice that in the pentest inventory file, we have introduced a new concept pentest:children This is because, we want to have a group called pentest which covers Ansible execution against both pentest todo and pentest-tooling simultaneously. But at the same time, we want the flexibility to run specific Ansible tasks against an individual group.
+2. The db group has a slightly different configuration. It uses a RedHat/Centos Linux distro. Others are based on Ubuntu (in this case user is ubuntu). Therefore, the user required for connectivity and path to python interpreter are different. If all your environment is based on Ubuntu, you may not need this kind of set up. Totally up to you how you want to do this. Whatever works for you is absolutely fine in this scenario.
+
+## Ansible Roles for CI Environment
+Add two more roles to ansible:
+1. SonarQube (Scroll down to the Sonarqube section to see instructions on how to set up and configure SonarQube manually)
+2. Artifactory
+**Why do we need SonarQube??**
+SonarQube is an open-source platform developed by SonarSource for continuous inspection of code quality, it is used to perform automatic reviews with static analysis of code to detect bugs, code smells, and security vulnerabilities.
+**Why do we need Artifactory?**
+Artifactory is a product by JFrog that serves as a binary repository manager. The binary repository is a natural extension to the source code repository, in that the outcome of your build process is stored. It can be
+used for certain other automation, but we will it strictly to manage our build artifact.
+
+## Configuring Ansible For Jenkins Deployment
+In previous projects, you have been launching Ansible commands manually from a CLI. Now, with Jenkins, we will start running Ansible from Jenkins UI. To do this,
+1. Navigate to Jenkins URL
+2. Install & Open Blue Ocean Jenkins Plugin
+3. Create a new pipeline
+![Screenshot (75)](https://github.com/user-attachments/assets/150b7b29-4df4-42f5-a96d-25735f3fc0ae)
+
+
+
 
