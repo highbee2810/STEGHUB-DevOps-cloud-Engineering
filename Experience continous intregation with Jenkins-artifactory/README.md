@@ -337,3 +337,5 @@ Then follow the steps below:
 - ID: private-key (or any ID you prefer)
 - Username: Leave it blank or set a default value (e.g., defaultuser) # This is because we are using servers of different username i.e ubbuntu and ec2-user. This value won’t be used because the actual usernames will be specified in the Ansible inventory file.
 - Private Key: Enter the private key directly
+![Screenshot (117)](https://github.com/user-attachments/assets/3ad908b8-26cb-4924-8b76-68cfda7a745b)
+## Update inventory/dev.yml by specifying the private IP address of the servers
