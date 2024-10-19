@@ -1,4 +1,4 @@
-# Experience Continuous Integration with Jenkins | Ansible |Artifactory |SonarQube | PHP- 101
+![image](https://github.com/user-attachments/assets/d5f13dfb-2cc0-45d0-a05c-28ab184eb1fe)# Experience Continuous Integration with Jenkins | Ansible |Artifactory |SonarQube | PHP- 101
 In this project, you will understand and get hands on experience around the entire concept around CI/CD from applications perspective. To fully gain real expertise around this idea, it is best to see it in action across different programming languages and from the platform perspective too. From the application perspective, we will be focusing on PHP here; there are more projects ahead that are based on Java, Node.js, .Net and Python. By the time you start working on Terraform, Docker and Kubernetes projects, you will get to see the platform perspective of CI/CD in action.
 ## What is Continuous Integration?
 In software engineering, Continuous Integration (CI) is a practice of merging all developers' working copies to a shared mainline (e.g., Git Repository or some other version control system) several times per day.Frequent merges reduce chances of any conflicts in code and allow to run tests more often to avoid massive rework if something goes wrong. This principle can be formulated as Commit early, push often.
@@ -339,3 +339,222 @@ Then follow the steps below:
 - Private Key: Enter the private key directly
 ![Screenshot (117)](https://github.com/user-attachments/assets/3ad908b8-26cb-4924-8b76-68cfda7a745b)
 ## Update inventory/dev.yml by specifying the private IP address of the servers
+![Screenshot (127)](https://github.com/user-attachments/assets/4952f2ec-ceda-4fe5-ba47-b07e9ea72c4f)
+**Update the playbook as well**
+![Screenshot (128)](https://github.com/user-attachments/assets/b8794ada-8a68-4ace-9b24-26855d230536)
+**Run Ansible against the Dev environment**
+![Screenshot (130)](https://github.com/user-attachments/assets/ace0a341-5566-4823-aaf1-24132932d2ae)
+![Screenshot (131)](https://github.com/user-attachments/assets/64ebb304-f798-41b7-87e5-e1627d72988a)
+![Screenshot (132)](https://github.com/user-attachments/assets/ad687836-6735-455a-88b2-11a4a7c67ad8)
+![Screenshot (133)](https://github.com/user-attachments/assets/9b419b7d-7a1a-4c84-8bfd-9d63b6b03ebc)
+![Screenshot (134)](https://github.com/user-attachments/assets/996b43ca-543b-4a56-8bd2-7d1d22cadf1d)
+![Screenshot (135)](https://github.com/user-attachments/assets/956aa2f7-effb-46d6-a697-d3a980054eb6)
+![Screenshot (136)](https://github.com/user-attachments/assets![Screenshot (126)](https://github.com/user-attachments/assets/c7cbb24c-700a-438b-b564-866e73f489dc)
+/32d9b088-5430-4c67-a9db-ce4dada98743)
+
+![Uploading Screenshot (126).png…]()
+
+**Parameterizing Jenkinsfile For Ansible Deployment**
+To deploy to other environments, we will need to use parameters.
+1. Update sit inventory with new servers (inventory/sit.yml)
+   
+```
+[tooling]
+<SIT-Tooling-Web-Server-Private-IP-Address>
+
+[todo]
+<SIT-Todo-Web-Server-Private-IP-Address>
+
+[nginx]
+<SIT-Nginx-Private-IP-Address>
+
+[db:vars]
+ansible_user=ec2-user
+ansible_python_interpreter=/usr/bin/python
+
+[db]
+<SIT-DB-Server-Private-IP-Address>
+```
+![Screenshot (138)](https://github.com/user-attachments/assets/6f80ab65-555d-48e2-ab56-02be4eccd11b)
+
+2. Update Jenkinsfile to introduce parameterization. Below is just one parameter. It has a default value in case if no value is specified at execution.
+```
+pipeline {
+    agent any
+
+    parameters {
+      string(name: 'inventory', defaultValue: 'dev',  description: 'This is the inventory file for the environment to deploy configuration')
+    }
+...
+```
+![Screenshot (139)](https://github.com/user-attachments/assets/8a2ec31c-b964-4478-94a7-5eb6672d7423)
+
+3.In the Ansible execution section, remove the hardcoded inventory/dev and replace with `${inventory}
+![Screenshot (140)](https://github.com/user-attachments/assets/9f53ad4f-a562-4144-903b-1891911c2348)
+
+Notice the Build Now has changed to Build with Parameters and this enables us to run differenet environment easily. The default value loads up, but we can now specify which environment we want to deploy the configuration to. Simply type sit and hit Run
+
+![Screenshot (142)](https://github.com/user-attachments/assets/102a4878-75b4-46c7-b041-f4baf6d63d0f)
+
+4. Add another parameter. This time, introduce tagging in Ansible. You can limit the Ansible execution to a specific role or playbook desired. Therefore, add an Ansible tag to run against webserver only. Test this locally first to get the experience. Once you understand this, update Jenkinsfile and run it from Jenkins.
+
+Update playbook/site.yml with tags
+![Screenshot (143)](https://github.com/user-attachments/assets/e6464ff4-fcb8-4492-93ef-4fa4049b565b)
+
+Add another parameter to the jenkinsfile. Name the parameter ansible_tags and the default value webserver
+
+
+
+```
+string(name: 'ansible_tags', defaultValue: 'webserver', description: 'Ansible tags to run specific roles or tasks')
+```
+![Screenshot (144)](https://github.com/user-attachments/assets/7dd9de49-ee35-4bf7-9053-f21888908301)
+Update the Ansible execution section to prompt for tag
+![Screenshot (145)](https://github.com/user-attachments/assets/db11eb56-4ef6-4958-9ff6-624adaec7f25)
+
+Click on the play button and update the inventory field to sit and the ansible_tags to webserver
+![Screenshot (146)](https://github.com/user-attachments/assets/71915dfe-8db5-4adb-952e-d91d13b0eedb)
+
+ click on run
+
+## To avoid hardcoding values in the Jenkinsfile, we can parameterize several more elements. Here are some suggestions:
+SCM (Source Control Management) URL and Branch: Parameterize the repository URL and the branch to allow flexibility in changing repositories and branches without modifying the Jenkinsfile.
+SSH Hosts: Parameterize the list of SSH hosts. This will enable you to specify different hosts for different environments or scenarios.
+Ansible Playbook Path: Parameterize the playbook path to allow different playbooks to be specified.
+Credentials ID: Parameterize the credentials ID used for SSH and Ansible to support different credentials for different environments.
+Role Path: The roles path in the Ansible configuration can be parameterized as well.
+```
+pipeline {
+    agent any
+
+    environment {
+        ANSIBLE_CONFIG = "${WORKSPACE}/deploy/ansible.cfg"
+    }
+
+    parameters {
+        string(name: 'inventory', defaultValue: 'dev', description: 'This is the inventory file for the environment to deploy configuration')
+        string(name: 'branch', defaultValue: 'main', description: 'Branch to checkout')
+        string(name: 'repo_url', defaultValue: 'https://github.com/highbee2810/ansible-config-mgt.git', description: 'Repository URL')
+        text(name: 'ssh_hosts', defaultValue: 'ubuntu@172.31.89.253\nubuntu@172.31.91.227\nec2-user@172.31.81.236\nec2-user@172.31.85.118', description: 'List of SSH hosts, one per line')
+        string(name: 'playbook_path', defaultValue: '${WORKSPACE}/playbooks/site.yml', description: 'Path to the Ansible playbook')
+        string(name: 'credentials_id', defaultValue: 'private-key', description: 'Credentials ID for SSH and Ansible')
+    }
+
+    stages {
+        stage('Initial cleanup') {
+            steps {
+                dir("${WORKSPACE}") {
+                    deleteDir()
+                }
+            }
+        }
+
+        stage('Checkout SCM') {
+            steps {
+                git branch: "${params.branch}", url: "${params.repo_url}"
+            }
+        }
+
+        stage('Prepare Ansible For Execution') {
+            steps {
+                sh 'echo ${WORKSPACE}'
+                sh 'sed -i "3 a roles_path=${WORKSPACE}/roles" ${WORKSPACE}/deploy/ansible.cfg'
+            }
+        }
+
+        stage('Test SSH Connections') {
+            steps {
+                script {
+                    def allHosts = params.ssh_hosts.split('\n')
+
+                    sshagent([params.credentials_id]) {
+                        allHosts.each { host ->
+                            sh "ssh -o StrictHostKeyChecking=no ${host} exit"
+                        }
+                    }
+                }
+            }
+        }
+
+        stage('Run Ansible playbook') {
+            steps {
+                sshagent([params.credentials_id]) {
+                    ansiblePlaybook(
+                        become: true,
+                        credentialsId: params.credentials_id,
+                        disableHostKeyChecking: true,
+                        installation: 'ansible',
+                        inventory: "${WORKSPACE}/inventory/${params.inventory}",
+                        playbook: params.playbook_path
+                    )
+                }
+            }
+        }
+
+        stage('Clean Workspace after build') {
+            steps {
+                cleanWs(cleanWhenAborted: true, cleanWhenFailure: true, cleanWhenNotBuilt: true, cleanWhenUnstable: true, deleteDirs: true)
+            }
+        }
+    }
+}
+```
+
+
+## CI/CD Pipline for TODO Application
+We already have tooling website as a part of deployment through Ansible. Here we will introduce another PHP application to add to the list of software products we are managing in our infrastructure. The good thing with this particular application is that it has unit tests, and it is an ideal application to show an end-to-end CI/CD pipeline for a particular application.
+
+## Todo Project files path
+ ```
+/path/to/your/laravel/project
+├── app
+│   ├── Console
+│   ├── Exceptions
+│   ├── Http
+│   │   ├── Controllers
+│   │   ├── Middleware
+│   ├── Models
+│   ├── Providers
+├── bootstrap
+│   ├── cache
+├── config
+│   ├── app.php
+│   ├── database.php
+│   └── ...
+├── database
+│   ├── factories
+│   ├── migrations
+│   ├── seeders
+├── public
+│   ├── index.php
+│   ├── css
+│   ├── js
+│   ├── ...
+├── resources
+│   ├── js
+│   ├── lang
+│   ├── views
+│   └── ...
+├── routes
+│   ├── api.php
+│   ├── channels.php
+│   ├── console.php
+│   ├── web.php
+├── storage
+│   ├── app
+│   ├── framework
+│   ├── logs
+├── tests
+│   ├── Feature
+│   ├── Unit
+├── vendor
+├── .env
+├── artisan
+├── composer.json
+├── composer.lock
+├── package.json
+├── phpunit.xml
+└── webpack.mix.js
+```
+Our goal here is to deploy the application onto servers directly from Artifactory rather than from git If you have not updated Ansible with an Artifactory role, simply use this guide to create an Ansible role for Artifactory (ignore the Nginx part). Configure Artifactory on Ubuntu 20.04
+
