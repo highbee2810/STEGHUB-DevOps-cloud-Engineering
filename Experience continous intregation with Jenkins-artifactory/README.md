@@ -1,4 +1,4 @@
-![image](https://github.com/user-attachments/assets/d5f13dfb-2cc0-45d0-a05c-28ab184eb1fe)# Experience Continuous Integration with Jenkins | Ansible |Artifactory |SonarQube | PHP- 101
+# Experience Continuous Integration with Jenkins | Ansible |Artifactory |SonarQube | PHP- 101
 In this project, you will understand and get hands on experience around the entire concept around CI/CD from applications perspective. To fully gain real expertise around this idea, it is best to see it in action across different programming languages and from the platform perspective too. From the application perspective, we will be focusing on PHP here; there are more projects ahead that are based on Java, Node.js, .Net and Python. By the time you start working on Terraform, Docker and Kubernetes projects, you will get to see the platform perspective of CI/CD in action.
 ## What is Continuous Integration?
 In software engineering, Continuous Integration (CI) is a practice of merging all developers' working copies to a shared mainline (e.g., Git Repository or some other version control system) several times per day.Frequent merges reduce chances of any conflicts in code and allow to run tests more often to avoid massive rework if something goes wrong. This principle can be formulated as Commit early, push often.
@@ -416,6 +416,8 @@ Click on the play button and update the inventory field to sit and the ansible_t
 ![Screenshot (146)](https://github.com/user-attachments/assets/71915dfe-8db5-4adb-952e-d91d13b0eedb)
 
  click on run
+ ![Screenshot (147)](https://github.com/user-attachments/assets/78fda427-cf5f-4fc9-beb8-65cd8f096054)
+
 
 ## To avoid hardcoding values in the Jenkinsfile, we can parameterize several more elements. Here are some suggestions:
 SCM (Source Control Management) URL and Branch: Parameterize the repository URL and the branch to allow flexibility in changing repositories and branches without modifying the Jenkinsfile.
@@ -499,6 +501,7 @@ pipeline {
     }
 }
 ```
+![Screenshot (148)](https://github.com/user-attachments/assets/179f1d72-2a16-46c6-925a-54531c4cfe71)
 
 
 ## CI/CD Pipline for TODO Application
@@ -557,4 +560,17 @@ We already have tooling website as a part of deployment through Ansible. Here we
 └── webpack.mix.js
 ```
 Our goal here is to deploy the application onto servers directly from Artifactory rather than from git If you have not updated Ansible with an Artifactory role, simply use this guide to create an Ansible role for Artifactory (ignore the Nginx part). Configure Artifactory on Ubuntu 20.04
+
+## Create an Ansible role for Artifactory
+**Prerequests**
+ensure that port 8082 is opened in artifactory server.
+**Install Artifactory role using Ansible galaxy collection**
+```
+ansible-galaxy collection install jfrog.platform
+```
+**Update Artifactory role in roles/artifactory/tasks/main.yml to install jfrog Artifactory**
+![Screenshot (149)](https://github.com/user-attachments/assets/7e530091-bfd9-451e-97d6-b1ea6077ebb6)
+![Screenshot (150)](https://github.com/user-attachments/assets/33bdf6a6-0ecb-4a85-b958-c735073375ed)
+**update playbook/site.yml**
+![Screenshot (151)](https://github.com/user-attachments/assets/fcc5e2e3-a2d3-4bc0-89ce-f83b96383f81)
 
