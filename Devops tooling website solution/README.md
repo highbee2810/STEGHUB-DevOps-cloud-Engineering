@@ -1,6 +1,3 @@
-<<<<<<< HEAD
-{\rtf1}
-=======
 # DevOps Tooling Website Solution- Documentation.
 This project introduces a set of DevOps tools that will help  in day to day activities in managing, developing, testing, deploying and monitoring different projects.
 
